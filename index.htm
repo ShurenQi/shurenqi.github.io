@@ -151,18 +151,20 @@
 
     /* ── Photo: show fully, no crop ── */
     .hero-photo {
-      position: relative;
-      display: inline-block;
-    }
+  	  position: relative;
+  	  display: inline-block;   
+  	  width: fit-content;       
+  	  align-self: start;        
+	}
     .hero-photo img {
-      /* Full display: natural proportions, no cropping */
-      width: 160px;
-      height: auto;
-      display: block;
+      width: 180px;
+      height: auto;            
+      display: block;          
       border-radius: var(--radius-lg);
-      filter: grayscale(12%) contrast(1.04);
+      filter: grayscale(15%) contrast(1.05);
       transition: filter 0.4s ease;
     }
+
     .hero-photo img:hover {
       filter: grayscale(0%) contrast(1.0);
     }
