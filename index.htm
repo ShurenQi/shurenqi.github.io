@@ -1,484 +1,565 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shuren Qi | Academic Homepage</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg:        #0b0f1a;
-      --surface:   #111827;
-      --surface2:  #1a2236;
-      --border:    rgba(255,255,255,0.07);
-      --gold:      #c9a84c;
-      --gold-dim:  rgba(201,168,76,0.18);
-      --gold-glow: rgba(201,168,76,0.08);
-      --text:      #d6dde8;
-      --text-dim:  #7a8899;
-      --accent:    #4e9af1;
-      --red:       #e05c5c;
-      --green:     #4caf7d;
-      --purple:    #9b7fe8;
-      --teal:      #3db9b0;
-      --nav-h:     62px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shuren Qi</title>
+<meta name="keywords" content="Shuren Qi, CityUHK, CityU, CUHK, NUAA, 祁树仁, Computer Vision">
+<meta name="description" content="Personal page of Shuren Qi">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<style>
+  :root {
+    --bg-deep:       #0b0f1a;
+    --bg-card:       #111827;
+    --bg-card-hover: #16202f;
+    --border:        rgba(255,255,255,0.07);
+    --gold:          #c9a84c;
+    --gold-light:    #e2c97e;
+    --text-primary:  #e8e6df;
+    --text-secondary:#9fa8b0;
+    --text-muted:    #5c6670;
+    --accent-blue:   #4a9eda;
+    --accent-teal:   #38b2a0;
+    --timeline-line: rgba(201,168,76,0.25);
+  }
 
-    html { scroll-behavior: smooth; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Source Serif 4', Georgia, serif;
-      font-size: 16px;
-      line-height: 1.75;
-      background-image:
-        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(78,154,241,0.06) 0%, transparent 70%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M60 0H0v60' fill='none' stroke='rgba(255,255,255,0.02)' stroke-width='1'/%3E%3C/svg%3E");
-    }
+  html { scroll-behavior: smooth; }
 
-    /* ── NAVBAR ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: var(--nav-h);
-      background: rgba(11,15,26,0.85);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 40px;
-      z-index: 1000;
-    }
-    .nav-brand {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--gold);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-    }
-    .nav-links { display: flex; gap: 28px; }
-    .nav-links a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      position: relative;
-      transition: color 0.25s;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute; bottom: -3px; left: 0; right: 100%;
-      height: 1px; background: var(--gold);
-      transition: right 0.3s ease;
-    }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-links a:hover::after { right: 0; }
+  body {
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
 
-    /* ── WRAPPER ── */
-    .page { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+  /* ── background texture ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    /* ── HERO ── */
-    .hero {
-      padding-top: calc(var(--nav-h) + 64px);
-      padding-bottom: 56px;
-      display: grid;
-      grid-template-columns: 210px 1fr auto;
-      gap: 0 40px;
-      align-items: start;
-    }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.4;
+    z-index: 0;
+  }
 
-    .avatar-wrap {
-      position: relative;
-      width: 170px;
-      height: 170px;
-      flex-shrink: 0;
-      margin-top: 8px;
-    }
-    .avatar-wrap::before {
-      content: '';
-      position: absolute;
-      inset: -3px;
-      border-radius: 50%;
-      background: conic-gradient(var(--gold), var(--accent), var(--gold));
-      animation: spin 8s linear infinite;
-      opacity: 0.7;
-    }
-    .avatar-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: var(--bg);
-      transform: scale(0.97);
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .avatar-wrap img {
-      position: absolute;
-      inset: 5px;
-      width: calc(100% - 10px);
-      height: calc(100% - 10px);
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: top center;
-      z-index: 1;
-      filter: grayscale(15%);
-      transition: filter 0.4s;
-    }
-    .avatar-wrap:hover img { filter: grayscale(0%); }
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
 
-    .hero-bio h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.1rem;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.15;
-      margin-bottom: 6px;
-    }
-    .hero-bio h1 span {
-      display: block;
-      font-size: 1.15rem;
-      font-weight: 400;
-      color: var(--gold);
-      font-family: 'Source Serif 4', serif;
-      font-style: italic;
-      letter-spacing: 0.04em;
-    }
-    .hero-bio .position {
-      margin-top: 14px;
-      font-size: 0.95rem;
-      color: var(--text-dim);
-      line-height: 1.9;
-    }
-    .hero-bio .position strong {
-      color: var(--text);
-      font-weight: 600;
-    }
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(11,15,26,0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    gap: 0 32px;
+  }
 
-    .hero-meta {
-      min-width: 220px;
-    }
-    .hero-meta h3 {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 10px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid var(--gold-dim);
-    }
-    .interest-list {
-      list-style: none;
-      margin-bottom: 18px;
-    }
-    .interest-list li {
-      font-size: 0.87rem;
-      color: var(--text-dim);
-      padding: 3px 0;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .interest-list li::before {
-      content: '';
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--gold);
-      flex-shrink: 0;
-    }
-    .contact-row {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      line-height: 2;
-    }
-    .contact-row a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .contact-row a:hover { color: var(--gold); }
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    margin-right: auto;
+    white-space: nowrap;
+  }
 
-    /* ── SECTION ── */
-    section { padding: 32px 0 16px; }
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.55rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 24px;
-      position: relative;
-      padding-bottom: 12px;
-    }
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 48px; height: 2px;
-      background: linear-gradient(90deg, var(--gold), transparent);
-    }
-    .section-sub {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text-dim);
-      margin: 28px 0 16px;
-      letter-spacing: 0.02em;
-    }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.25s ease;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
 
-    /* ── BIO PARA ── */
-    .bio-para {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--gold);
-      border-radius: 0 10px 10px 0;
-      padding: 22px 28px;
-      font-size: 0.95rem;
-      color: var(--text);
-      line-height: 1.85;
-    }
-    .bio-para a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted rgba(78,154,241,0.4); transition: color 0.2s; }
-    .bio-para a:hover { color: var(--gold); }
+  /* ── HERO ── */
+  .hero {
+    padding-top: 96px;
+    padding-bottom: 40px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 40px 48px;
+    align-items: start;
+  }
 
-    /* ── NEWS TIMELINE ── */
-    .news-wrap { position: relative; }
-    .news-list { list-style: none; }
-    .news-list li {
-      display: flex;
-      gap: 18px;
-      padding: 11px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-      color: var(--text-dim);
-      align-items: flex-start;
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.45s, transform 0.45s;
-    }
-    .news-list li.visible { opacity: 1; transform: none; }
-    .news-dot {
-      margin-top: 7px;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--gold-dim);
-      border: 1.5px solid var(--gold);
-      flex-shrink: 0;
-    }
-    .news-list li .tag-top { color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 500; }
-    .news-list a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted rgba(78,154,241,0.35); }
-    .news-list a:hover { color: var(--gold); }
-    .show-more-btn {
-      display: block; margin: 18px auto 0;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 8px 26px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .show-more-btn:hover { border-color: var(--gold); color: var(--gold); }
+  /* avatar */
+  .avatar-wrap {
+    position: relative;
+    width: 170px;
+    flex-shrink: 0;
+  }
+  .avatar-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--gold), var(--accent-blue), var(--gold));
+    z-index: -1;
+    opacity: 0.6;
+  }
+  .avatar-wrap img {
+    display: block;
+    width: 170px;
+    height: auto;
+    border-radius: 12px;
+    filter: grayscale(15%) contrast(1.05);
+    transition: filter 0.4s;
+  }
+  .avatar-wrap:hover img { filter: grayscale(0%) contrast(1); }
 
-    /* ── PUBLICATION CARD ── */
-    .pub-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
-    .pub-card {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 24px;
-      padding: 26px 0;
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.5s, transform 0.5s;
-    }
-    .pub-card.visible { opacity: 1; transform: none; }
+  /* bio */
+  .bio-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .bio-name .cn {
+    font-size: 1.35rem;
+    color: var(--gold);
+    margin-left: 10px;
+    font-weight: 400;
+  }
+  .bio-title {
+    font-size: 0.95rem;
+    color: var(--accent-blue);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+  .bio-affil {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+  .bio-affil strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
 
-    .pub-thumb-wrap {
-      position: relative;
-    }
-    .venue-badge {
-      position: absolute;
-      top: 0; left: 0;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
-      font-weight: 500;
-      letter-spacing: 0.07em;
-      padding: 3px 8px;
-      border-radius: 3px;
-      text-transform: uppercase;
-      z-index: 2;
-      line-height: 1.4;
-    }
-    .pub-thumb-wrap img {
-      display: block;
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      object-position: center top;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      margin-top: 26px;
-      background: var(--surface2);
-    }
+  /* research interests */
+  .interests-col {}
+  .interests-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .tag-list { display: flex; flex-direction: column; gap: 7px; }
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    font-size: 0.82rem;
+    color: var(--gold-light);
+    font-family: 'Source Serif 4', serif;
+    background: rgba(201,168,76,0.05);
+    white-space: nowrap;
+  }
+  .contact-links { margin-top: 18px; }
+  .contact-links .email {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 3px;
+  }
+  .contact-links .ext-links { margin-top: 8px; display: flex; gap: 12px; }
+  .ext-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent-blue);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(74,158,218,0.3);
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .ext-links a:hover { color: var(--gold); border-color: var(--gold); }
 
-    .badge-www    { background: rgba(78,154,241,0.15); color: #4e9af1; border: 1px solid rgba(78,154,241,0.3); }
-    .badge-iccv   { background: rgba(155,127,232,0.15); color: #9b7fe8; border: 1px solid rgba(155,127,232,0.3); }
-    .badge-tpami  { background: rgba(201,168,76,0.15); color: #c9a84c; border: 1px solid rgba(201,168,76,0.3); }
-    .badge-tip    { background: rgba(61,185,176,0.15); color: #3db9b0; border: 1px solid rgba(61,185,176,0.3); }
-    .badge-csur   { background: rgba(224,92,92,0.15); color: #e05c5c; border: 1px solid rgba(224,92,92,0.3); }
-    .badge-usenix { background: rgba(224,92,92,0.18); color: #e07070; border: 1px solid rgba(224,92,92,0.35); }
-    .badge-tcsvt  { background: rgba(76,175,125,0.15); color: #4caf7d; border: 1px solid rgba(76,175,125,0.3); }
-    .badge-tnnls  { background: rgba(201,168,76,0.12); color: #d4aa5a; border: 1px solid rgba(201,168,76,0.25); }
-    .badge-tomm   { background: rgba(155,127,232,0.12); color: #b09ae0; border: 1px solid rgba(155,127,232,0.25); }
-    .badge-tbd    { background: rgba(61,185,176,0.12); color: #5dc9c2; border: 1px solid rgba(61,185,176,0.25); }
-    .badge-tifs   { background: rgba(78,154,241,0.12); color: #70aef5; border: 1px solid rgba(78,154,241,0.25); }
+  /* ── BIO PARAGRAPH ── */
+  .bio-para {
+    background: linear-gradient(135deg, rgba(17,24,39,0.8), rgba(22,32,47,0.8));
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 22px 28px;
+    font-size: 0.97rem;
+    color: var(--text-secondary);
+    line-height: 1.85;
+    margin-bottom: 52px;
+  }
+  .bio-para a { color: var(--gold-light); text-decoration: none; border-bottom: 1px solid rgba(226,201,126,0.3); }
+  .bio-para a:hover { color: var(--gold); border-color: var(--gold); }
 
-    .pub-info { display: flex; flex-direction: column; justify-content: center; }
-    .pub-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.98rem;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.4;
-      margin-bottom: 6px;
-    }
-    .pub-authors {
-      font-size: 0.83rem;
-      color: var(--text-dim);
-      margin-bottom: 5px;
-    }
-    .pub-authors strong { color: var(--text); }
-    .pub-venue {
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      margin-bottom: 10px;
-      font-style: italic;
-    }
-    .pub-venue em { color: var(--gold); font-style: normal; font-weight: 600; }
-    .pub-links { display: flex; flex-wrap: wrap; gap: 6px; }
-    .pub-link {
-      display: inline-block;
-      padding: 3px 11px;
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .pub-link:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-glow); }
+  /* ── SECTION HEADINGS ── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0;
+    padding-top: 80px;
+    margin-top: -80px;
+    position: relative;
+    display: inline-block;
+  }
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-top: 8px;
+  }
+  .section-block {
+    margin-bottom: 56px;
+  }
+  .section-block > p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .section-block > p a { color: var(--accent-blue); text-decoration: none; }
 
-    .pub-tag-chip {
-      display: inline-block;
-      padding: 1px 8px;
-      border-radius: 3px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      background: rgba(76,175,125,0.12);
-      color: #4caf7d;
-      border: 1px solid rgba(76,175,125,0.25);
-      margin-left: 4px;
-    }
+  /* ── SUBSECTION HEADINGS ── */
+  .subsection-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--gold-light);
+    padding-top: 80px;
+    margin-top: -80px;
+    margin-bottom: 24px;
+    letter-spacing: 0.02em;
+  }
 
-    .scholar-link {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      margin-bottom: 16px;
-    }
-    .scholar-link a { color: var(--accent); text-decoration: none; }
-    .scholar-link a:hover { color: var(--gold); }
+  /* ── TIMELINE NEWS ── */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px; top: 6px; bottom: 6px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), var(--timeline-line), transparent);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 16px;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 9px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--bg-deep);
+    border: 1.5px solid var(--gold);
+    transition: background 0.2s;
+  }
+  .timeline-item:hover::before { background: var(--gold); }
+  .timeline-item a { color: var(--gold-light); text-decoration: none; border-bottom: 1px solid rgba(226,201,126,0.25); transition: color 0.2s; }
+  .timeline-item a:hover { color: var(--gold); }
+  .timeline-item .top-badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    padding: 1px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
 
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 0 40px;
-      text-align: center;
-    }
-    footer a { display: inline-block; }
-    footer img { opacity: 0.45; transition: opacity 0.3s; }
-    footer img:hover { opacity: 0.8; }
+  /* collapse */
+  #news-extra { display: none; }
+  #news-extra.open { display: block; }
+  .show-more-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--accent-blue);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    padding: 7px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .show-more-btn:hover { border-color: var(--accent-blue); color: var(--gold); }
 
-    /* ── FADE IN ── */
-    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .fade-up.visible { opacity: 1; transform: none; }
+  /* ── PUBLICATION CARDS ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 820px) {
-      .hero { grid-template-columns: 1fr; }
-      .avatar-wrap { margin: 0 auto 24px; }
-      .hero-meta { margin-top: 24px; }
-      .pub-card { grid-template-columns: 1fr; }
-      .pub-thumb-wrap img { height: 160px; margin-top: 30px; }
-      .nav-links { display: none; }
-    }
-  </style>
+  .pub-card {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    padding: 24px 20px;
+    border-radius: 10px;
+    transition: background 0.25s;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.45s ease, transform 0.45s ease, background 0.25s;
+  }
+  .pub-card.visible { opacity: 1; transform: translateY(0); }
+  .pub-card:hover { background: var(--bg-card-hover); }
+
+  .pub-thumb {
+    position: relative;
+  }
+  .venue-badge {
+    position: absolute;
+    top: 0; left: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    padding: 3px 9px;
+    border-radius: 3px 0 6px 0;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+
+  /* badge colors */
+  .badge-www     { background:#1a3a2a; color:#4ade80; border:1px solid #4ade8033; }
+  .badge-iccv    { background:#1a2a3a; color:#60a5fa; border:1px solid #60a5fa33; }
+  .badge-tpami   { background:#2a1a3a; color:#c084fc; border:1px solid #c084fc33; }
+  .badge-csur    { background:#3a2a1a; color:#fb923c; border:1px solid #fb923c33; }
+  .badge-usenix  { background:#3a1a1a; color:#f87171; border:1px solid #f87171aa; }
+  .badge-tip     { background:#1a2a3a; color:#38bdf8; border:1px solid #38bdf833; }
+  .badge-tcsvt   { background:#1a3a2a; color:#34d399; border:1px solid #34d39933; }
+  .badge-tnnls   { background:#2a3a1a; color:#a3e635; border:1px solid #a3e63533; }
+  .badge-tomm    { background:#3a1a2a; color:#fb7185; border:1px solid #fb718533; }
+  .badge-tbd     { background:#1a2a2a; color:#2dd4bf; border:1px solid #2dd4bf33; }
+  .badge-tifs    { background:#2a2a3a; color:#818cf8; border:1px solid #818cf833; }
+  .badge-tnnls   { background:#2a3a1a; color:#a3e635; border:1px solid #a3e63533; }
+
+  .pub-thumb img {
+    display: block;
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    margin-top: 26px;
+  }
+
+  .pub-content { padding-top: 2px; }
+  .pub-content .pub-title {
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    font-size: 0.97rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+  .pub-content .pub-authors {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+  .pub-content .pub-authors strong { color: var(--gold-light); }
+  .pub-content .pub-venue {
+    font-size: 0.83rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  .pub-content .pub-venue em {
+    font-style: normal;
+    color: var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+  }
+  .pub-content .pub-venue .artifact-badge {
+    display: inline-block;
+    font-style: normal;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 1px 7px;
+    border-radius: 3px;
+    margin-left: 5px;
+  }
+  .ab-avail { background:rgba(232,98,52,0.15); color:#E86234; border:1px solid #E8623444; }
+  .ab-func  { background:rgba(51,115,181,0.15); color:#3373B5; border:1px solid #3373B544; }
+  .ab-repro { background:rgba(103,68,148,0.15); color:#674494; border:1px solid #67449444; }
+
+  .pub-links { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pub-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent-blue);
+    text-decoration: none;
+    border: 1px solid rgba(74,158,218,0.25);
+    padding: 2px 10px;
+    border-radius: 3px;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .pub-link:hover { color: var(--gold); border-color: var(--gold); background: rgba(201,168,76,0.07); }
+  .pub-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent-teal);
+    margin-top: 5px;
+    display: block;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 0 48px;
+    text-align: center;
+  }
+  footer .flag-counter img { filter: grayscale(0.4) opacity(0.6); }
+  footer p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 12px;
+  }
+
+  /* ── FADE IN on scroll ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; gap: 24px; }
+    .avatar-wrap { width: 140px; margin: 0 auto; }
+    .pub-card { grid-template-columns: 1fr; }
+    .pub-thumb img { height: 160px; margin-top: 26px; }
+    .nav-links { display: none; }
+  }
+</style>
 </head>
+
 <body>
 
-<!-- NAV -->
+<!-- NAVBAR -->
 <nav>
-  <a class="nav-brand" href="#Home">Dr. Shuren Qi @ CityU</a>
+  <a class="nav-brand" href="./">Dr. Shuren Qi @ CityU</a>
   <div class="nav-links">
+    <a href="#Home">Home</a>
     <a href="#News">News</a>
-    <a href="#Representations">Representations</a>
-    <a href="#Applications">Applications</a>
+    <a href="#Publications">Publications</a>
   </div>
 </nav>
 
-<div class="page" id="Home">
+<div class="page-wrap">
 
   <!-- HERO -->
-  <div class="hero">
+  <section class="hero" id="Home">
     <!-- Avatar -->
     <div class="avatar-wrap">
-      <img src="files/shuren_2025.jpg" alt="Shuren Qi portrait" />
+      <img src="files/shuren_2025.jpg" alt="Shuren Qi">
     </div>
 
     <!-- Bio -->
-    <div class="hero-bio">
-      <h1>
-        Shuren Qi
-        <span>&#31048;&#26641;&#20161;</span>
-      </h1>
-      <div class="position">
-        <strong>Postdoctoral Fellow</strong><br>
-        City University of Hong Kong<br>
+    <div class="bio-col">
+      <h1 class="bio-name">Shuren Qi <span class="cn">祁树仁</span></h1>
+      <div class="bio-title">Postdoctoral Fellow</div>
+      <div class="bio-affil">
+        <strong>City University of Hong Kong</strong><br>
         Frontier of Artificial Networks (FAN) Group<br>
         Department of Data Science, College of Computing
       </div>
     </div>
 
-    <!-- Meta -->
-    <div class="hero-meta">
-      <h3>Research Interests</h3>
-      <ul class="interest-list">
-        <li>Invariants</li>
-        <li>Representations</li>
-        <li>Geometric Deep Learning</li>
-        <li>Trustworthy AI</li>
-        <li>Science AI</li>
-      </ul>
-      <div class="contact-row">
-        shurenqi@cityu.edu.hk<br>
-        shurenqi@nuaa.edu.cn<br>
-        <a href="https://scholar.google.com/citations?user=U4UPvlkAAAAJ&hl" target="_blank">Google Scholar</a>
-        &nbsp;/&nbsp;
-        <a href="https://github.com/ShurenQi" target="_blank">GitHub</a>
+    <!-- Interests + Contact -->
+    <div class="interests-col">
+      <h4>Research Interests</h4>
+      <div class="tag-list">
+        <span class="tag">Invariants</span>
+        <span class="tag">Representations</span>
+        <span class="tag">Geometric Deep Learning</span>
+        <span class="tag">Trustworthy AI</span>
+        <span class="tag">Science AI</span>
+      </div>
+      <div class="contact-links">
+        <span class="email">shurenqi@cityu.edu.hk</span>
+        <span class="email">shurenqi@nuaa.edu.cn</span>
+        <div class="ext-links">
+          <a href="https://scholar.google.com/citations?user=U4UPvlkAAAAJ&hl" target="_blank">Google Scholar</a>
+          <a href="https://github.com/ShurenQi" target="_blank">GitHub</a>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- BIO -->
+  <!-- BIO PARAGRAPH -->
   <div class="bio-para fade-up">
-    I am currently a Postdoctoral Fellow at the Department of Data Science,
-    City University of Hong Kong (<a href="https://www.cityu.edu.hk/" target="_blank">CityU</a>).
+    I am currently a Postdoctoral Fellow at the Department of Data Science, City University of Hong Kong
+    (<a href="https://www.cityu.edu.hk/" target="_blank">CityU</a>).
     Prior to this, I was a Postdoctoral Fellow at The Chinese University of Hong Kong
     (<a href="https://www.cuhk.edu.hk/" target="_blank">CUHK</a>).
     I obtained my Ph.D. degree from the Nanjing University of Aeronautics and Astronautics
@@ -487,134 +568,126 @@
     with a particular focus on <a href="https://geometricdeeplearning.com/" target="_blank">Geometric Deep Learning</a>.
     My current work investigates novel designs of
     <a href="https://shurenqi.github.io/wwwtutorial/" target="_blank">invariant representations</a>
-    -- from global to local and hierarchical assumptions.
+    — from global to local and hierarchical assumptions.
     My research has been published in top-tier journals and conferences,
     such as ACM Computing Surveys, IEEE TPAMI, IEEE TIP, ICCV, and USENIX Security.
   </div>
 
-  <!-- ── NEWS ── -->
-  <section>
+  <!-- NEWS -->
+  <div class="section-block">
     <h2 class="section-title" id="News">News</h2>
-    <ul class="news-list" id="newsList">
-      <li>
-        <div class="news-dot"></div>
-        <div><span class="tag-top">[TOP]</span> A series of invited talks "<a href="https://fancityu.github.io/">Frontier of Artificial Network</a>".</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>Joining the Department of Data Science, City University of Hong Kong, as a Postdoctoral Fellow.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A talk at the <a href="https://cai.jxufe.edu.cn/shows/14/486.html" target="_blank">Jiangxi University of Finance and Economics</a>.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>Our paper has been accepted by the IEEE Transactions on Image Processing (TIP).</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A talk at the China Symposium on Image and Graphics (CSIG) Young Scientists Conference 2025.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>Honored to be supported by the Young Elite Scientists Sponsorship Program (Hong Kong and Macau), Guangzhou Association For Science and Technology.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A talk at <a href="https://www.cityu.edu.hk/rcms/wgm2025/index.html" target="_blank">City University of Hong Kong</a>.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>Our paper has been accepted by the IEEE Transactions on Image Processing (TIP).</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A minisymposium "<a href="https://www.math.cuhk.edu.hk/conference/hksiam2025/mini-ms02.php">Trustworthy ML: Theory and Applications</a>" [<a href="files/MS02 Poster.pdf" target="_blank">poster</a>] [<a href="files/MS02 Program.pdf" target="_blank">program</a>].</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>Our paper has been accepted by the International Conference on Computer Vision (ICCV) 2025.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A talk at <a href="https://ccs.scu.edu.cn/info/1025/4143.htm" target="_blank">Sichuan University</a>.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div><a href="https://shurenqi.github.io/wwwtutorial/" target="_blank">ACM Web Conference (WWW) 2025 tutorial homepage</a> has been released [<a href="wwwtutorial/materials/fullslides.pdf" target="_blank">slides</a>].</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>Honored to be awarded for the outstanding doctoral dissertation.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>Honored to be supported by the Research Talent Hub for ITF projects (RTH-ITF).</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A talk at the Huawei Hong Kong Research Center [<a href="files/huaweitalk.pdf">slides</a>].</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>Our paper has been accepted by the USENIX Security Symposium (USENIX Security) 2025.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A talk at <a href="https://math.nuaa.edu.cn/2024/1230/c17584a361830/page.htm" target="_blank">Nanjing University of Aeronautics and Astronautics</a>.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A talk at <a href="http://im.hit.edu.cn/2024/1219/c8389a361435/page.htm" target="_blank">Harbin Institute of Technology</a>.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>Our tutorial has been accepted by the ACM Web Conference (WWW) 2025.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A talk at the China Symposium on Mathematics and Financial Science (ChinaMFS) 2024.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>Joining the Department of Mathematics, The Chinese University of Hong Kong, as a Postdoctoral Fellow.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A talk at <a href="https://math.hit.edu.cn/2024/0624/c10292a347610/page.htm" target="_blank">Harbin Institute of Technology</a> [<a href="files/HITslides.pdf">slides</a>].</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A talk at <a href="files/CUHKposter.pdf" target="_blank">The Chinese University of Hong Kong</a>.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>A talk at the Jiangxi University of Finance and Economics.</div>
-      </li>
-      <li>
-        <div class="news-dot"></div>
-        <div>Passed the <a href="https://cs.nuaa.edu.cn/2024/0530/c10851a341405/page.htm" target="_blank">doctoral dissertation defense</a> [<a href="files/dissertation.pdf">dissertation</a>].</div>
-      </li>
-    </ul>
-    <button class="show-more-btn" id="showMoreBtn">Show all news</button>
-  </section>
 
-  <!-- ── PUBLICATIONS: REPRESENTATIONS ── -->
-  <section>
-    <h2 class="section-title" id="Representations">Selected Publications</h2>
-    <div class="scholar-link">Full list at <a href="https://scholar.google.com/citations?user=U4UPvlkAAAAJ&hl" target="_blank">Google Scholar</a></div>
+    <div style="height:32px;"></div>
 
-    <div class="section-sub">Representations</div>
-    <hr class="pub-divider"/>
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="top-badge">TOP</span>
+        A series of invited talks "<a href="https://fancityu.github.io/">Frontier of Artificial Network</a>".
+      </div>
+      <div class="timeline-item">
+        I am joining the Department of Data Science, City University of Hong Kong, as a Postdoctoral Fellow.
+      </div>
+      <div class="timeline-item">
+        A talk at the <a href="https://cai.jxufe.edu.cn/shows/14/486.html" target="_blank">Jiangxi University of Finance and Economics</a>.
+      </div>
+      <div class="timeline-item">
+        Our paper has been accepted by the IEEE Transactions on Image Processing (TIP).
+      </div>
+      <div class="timeline-item">
+        A talk at the CSIG Young Scientists Conference 2025.
+      </div>
+      <div class="timeline-item">
+        I am honored to be supported by the Young Elite Scientists Sponsorship Program (Hong Kong and Macau), Guangzhou Association For Science and Technology.
+      </div>
+
+      <!-- collapsible extra -->
+      <div id="news-extra">
+        <div class="timeline-item">
+          A talk at the <a href="https://www.cityu.edu.hk/rcms/wgm2025/index.html" target="_blank">City University of Hong Kong</a>.
+        </div>
+        <div class="timeline-item">
+          Our paper has been accepted by the IEEE Transactions on Image Processing (TIP).
+        </div>
+        <div class="timeline-item">
+          A minisymposium "<a href="https://www.math.cuhk.edu.hk/conference/hksiam2025/mini-ms02.php">Trustworthy ML: Theory and Applications</a>"
+          [<a href="files/MS02 Poster.pdf" target="_blank">poster</a>]
+          [<a href="files/MS02 Program.pdf" target="_blank">program</a>].
+        </div>
+        <div class="timeline-item">
+          Our paper has been accepted by the International Conference on Computer Vision (ICCV) 2025.
+        </div>
+        <div class="timeline-item">
+          A talk at the <a href="https://ccs.scu.edu.cn/info/1025/4143.htm">Sichuan University</a>.
+        </div>
+        <div class="timeline-item">
+          <a href="https://shurenqi.github.io/wwwtutorial/" target="_blank">WWW 2025 tutorial homepage</a> has been released
+          [<a href="wwwtutorial/materials/fullslides.pdf" target="_blank">slides</a>].
+        </div>
+        <div class="timeline-item">
+          I am honored to be awarded by the University for the outstanding doctoral dissertation.
+        </div>
+        <div class="timeline-item">
+          I am honored to be supported by the Research Talent Hub for ITF projects (RTH-ITF).
+        </div>
+        <div class="timeline-item">
+          A talk at the Huawei Hong Kong Research Center [<a href="files/huaweitalk.pdf">slides</a>].
+        </div>
+        <div class="timeline-item">
+          Our paper has been accepted by the USENIX Security Symposium (USENIX Security) 2025.
+        </div>
+        <div class="timeline-item">
+          A talk at the <a href="https://math.nuaa.edu.cn/2024/1230/c17584a361830/page.htm" target="_blank">Nanjing University of Aeronautics and Astronautics</a>.
+        </div>
+        <div class="timeline-item">
+          A talk at the <a href="http://im.hit.edu.cn/2024/1219/c8389a361435/page.htm" target="_blank">Harbin Institute of Technology</a>.
+        </div>
+        <div class="timeline-item">
+          Our tutorial has been accepted by the ACM Web Conference (WWW) 2025.
+        </div>
+        <div class="timeline-item">
+          A talk at ChinaMFS 2024.
+        </div>
+        <div class="timeline-item">
+          I am joining the Department of Mathematics, The Chinese University of Hong Kong, as a Postdoctoral Fellow.
+        </div>
+        <div class="timeline-item">
+          A talk at the <a href="https://math.hit.edu.cn/2024/0624/c10292a347610/page.htm" target="_blank">Harbin Institute of Technology</a>
+          [<a href="files/HITslides.pdf">slides</a>].
+        </div>
+        <div class="timeline-item">
+          A talk at the <a href="files/CUHKposter.pdf" target="_blank">Chinese University of Hong Kong</a>.
+        </div>
+        <div class="timeline-item">
+          A talk at the Jiangxi University of Finance and Economics.
+        </div>
+        <div class="timeline-item">
+          I have passed the <a href="https://cs.nuaa.edu.cn/2024/0530/c10851a341405/page.htm" target="_blank">doctoral dissertation defense</a>
+          [<a href="files/dissertation.pdf">dissertation</a>].
+        </div>
+      </div>
+    </div>
+
+    <button class="show-more-btn" id="news-toggle" onclick="toggleNews()">Show more</button>
+  </div>
+
+  <!-- PUBLICATIONS -->
+  <div class="section-block">
+    <h2 class="section-title" id="Publications">Selected Publications</h2>
+    <p>Full list at <a href="https://scholar.google.com/citations?user=U4UPvlkAAAAJ&hl">Google Scholar</a></p>
+  </div>
+
+  <!-- Representations -->
+  <div style="padding-top:80px; margin-top:-80px;">
+    <h3 class="subsection-title">Representations</h3>
+    <hr class="divider">
 
     <!-- WWW -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-www">WWW 2025</span>
-        <img src="files/tutorial2024.png" alt="WWW tutorial thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-www">WWW</span>
+        <img src="files/tutorial2024.png" alt="WWW Tutorial">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">Rethink Deep Learning with Invariance in Data Representation</div>
         <div class="pub-authors"><strong>Shuren Qi</strong>, Fei Wang, Tieyong Zeng, Fenglei Fan</div>
         <div class="pub-venue">The ACM Web Conference <em>(WWW)</em>, Tutorial Track, 2025</div>
@@ -626,15 +699,16 @@
           <a class="pub-link" href="https://mp.weixin.qq.com/s/ICPpEy9KQupg8o1dROoR3g" target="_blank">TL;DR</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- ICCV -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-iccv">ICCV 2025</span>
-        <img src="files/ICCV2025.png" alt="ICCV 2025 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-iccv">ICCV</span>
+        <img src="files/ICCV2025.png" alt="ICCV 2025">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">Transparent Vision: A Theory of Hierarchical Invariant Representations</div>
         <div class="pub-authors"><strong>Shuren Qi</strong>, Yushu Zhang, Chao Wang, Zhihua Xia, Xiaochun Cao, Fenglei Fan</div>
         <div class="pub-venue">International Conference on Computer Vision <em>(ICCV)</em>, 2025</div>
@@ -645,15 +719,16 @@
           <a class="pub-link" href="https://mp.weixin.qq.com/s/Fkmj4BzcwcMe7NxLChaTlQ" target="_blank">TL;DR</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- TPAMI 2023 -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-tpami">TPAMI 2023</span>
-        <img src="files/TPAMI2023.png" alt="TPAMI 2023 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-tpami">TPAMI</span>
+        <img src="files/TPAMI2023.png" alt="TPAMI 2023">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">A Principled Design of Image Representation: Towards Forensic Tasks</div>
         <div class="pub-authors"><strong>Shuren Qi</strong>, Yushu Zhang, Chao Wang, Jiantao Zhou, Xiaochun Cao</div>
         <div class="pub-venue">IEEE Transactions on Pattern Analysis and Machine Intelligence <em>(TPAMI)</em>, 2023</div>
@@ -661,20 +736,21 @@
           <a class="pub-link" href="https://arxiv.org/abs/2203.00913" target="_blank">Paper</a>
           <a class="pub-link" href="https://github.com/ShurenQi/DIR" target="_blank">Code</a>
           <a class="pub-link" href="https://mp.weixin.qq.com/s/M6eUEF7Fyutx3ixM5fGyvg" target="_blank">Award</a>
-          <a class="pub-link" href="https://newsweb.nuaa.edu.cn/2022/0907/c738a291713/page.htm" target="_blank">Media</a>
+          <a class="pub-link" href="https://newsweb.nuaa.edu.cn/2022/0907/c738a291713/page.htm" target="_blank">Media Coverage</a>
           <a class="pub-link" href="https://github.com/ChenqiKONG/Awesome-Image-Forensics" target="_blank">Reading List</a>
           <a class="pub-link" href="https://mp.weixin.qq.com/s/j5mn4PsRaKu7JLmp142p7g" target="_blank">TL;DR</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- TPAMI 2024 -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-tpami">TPAMI 2024</span>
-        <img src="files/TPAMI2024.png" alt="TPAMI 2024 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-tpami">TPAMI</span>
+        <img src="files/TPAMI2024.png" alt="TPAMI 2024">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">Representing Noisy Image Without Denoising</div>
         <div class="pub-authors"><strong>Shuren Qi</strong>, Yushu Zhang, Chao Wang, Tao Xiang, Xiaochun Cao, Yong Xiang</div>
         <div class="pub-venue">IEEE Transactions on Pattern Analysis and Machine Intelligence <em>(TPAMI)</em>, 2024</div>
@@ -684,47 +760,50 @@
           <a class="pub-link" href="https://mp.weixin.qq.com/s/BS1N_vvIhLAD3Sa7Mv8O9g" target="_blank">TL;DR</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- CSUR 2023 -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-csur">CSUR 2023</span>
-        <img src="files/CSUR2023.png" alt="CSUR 2023 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-csur">CSUR</span>
+        <img src="files/CSUR2023.png" alt="CSUR 2023">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">A Survey of Orthogonal Moments for Image Representation: Theory, Implementation, and Evaluation</div>
         <div class="pub-authors"><strong>Shuren Qi</strong>, Yushu Zhang, Chao Wang, Jiantao Zhou, Xiaochun Cao</div>
-        <div class="pub-venue">ACM Computing Surveys <em>(CSUR)</em>, 2023 &mdash; <span style="font-style:normal;color:var(--green);font-size:0.8rem;">accepted directly in the 1st round of peer review</span></div>
+        <div class="pub-venue">ACM Computing Surveys <em>(CSUR)</em>, 2023 &mdash; <i>accepted directly in the 1st round of peer review</i></div>
         <div class="pub-links">
           <a class="pub-link" href="https://arxiv.org/abs/2103.14799" target="_blank">Paper</a>
           <a class="pub-link" href="https://github.com/ShurenQi/MomentToolbox" target="_blank">Code</a>
           <a class="pub-link" href="https://zhuanlan.zhihu.com/p/402410540" target="_blank">Zhihu</a>
           <a class="pub-link" href="https://mp.weixin.qq.com/s/ymAAzMQbWbKyuWz_r0wDBQ" target="_blank">TL;DR</a>
-          <span class="pub-tag-chip">ESI Highly Cited</span>
         </div>
+        <span class="pub-note">ESI Highly Cited Paper</span>
       </div>
-    </div><hr class="pub-divider"/>
-  </section>
+    </div>
+    <hr class="divider">
+  </div>
 
-  <!-- ── PUBLICATIONS: APPLICATIONS ── -->
-  <section>
-    <div class="section-sub" id="Applications">Applications</div>
-    <hr class="pub-divider"/>
+  <!-- Applications -->
+  <div style="padding-top:52px;">
+    <h3 class="subsection-title">Applications</h3>
+    <hr class="divider">
 
-    <!-- USENIX -->
+    <!-- USENIX Security -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-usenix">USENIX Sec. 2025</span>
-        <img src="files/USENIX2025.png" alt="USENIX Security 2025 thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-usenix">USENIX</span>
+        <img src="files/USENIX2025.png" alt="USENIX Security 2025">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">Atkscopes: Multiresolution Adversarial Perturbation as a Unified Attack on Perceptual Hashing and Beyond</div>
         <div class="pub-authors">Yushu Zhang, Yuanyuan Sun, <strong>Shuren Qi*</strong>, Zhongyun Hua, Wenying Wen, Yuming Fang</div>
-        <div class="pub-venue">USENIX Security Symposium <em>(USENIX Security)</em>, 2025 &nbsp;
-          <span style="color:#E86234;font-style:normal;">Available</span> &nbsp;
-          <span style="color:#3373B5;font-style:normal;">Functional</span> &nbsp;
-          <span style="color:#9b7fe8;font-style:normal;">Reproduced</span>
+        <div class="pub-venue">
+          The USENIX Security Symposium <em>(USENIX Security)</em>, 2025
+          <span class="artifact-badge ab-avail">Available</span>
+          <span class="artifact-badge ab-func">Functional</span>
+          <span class="artifact-badge ab-repro">Reproduced</span>
         </div>
         <div class="pub-links">
           <a class="pub-link" href="https://www.usenix.org/conference/usenixsecurity25/presentation/zhang-yushu" target="_blank">Paper</a>
@@ -734,15 +813,16 @@
           <a class="pub-link" href="https://mp.weixin.qq.com/s/0hf-5WR4YbGFSrV3Gr9PjQ" target="_blank">TL;DR</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- TIP 2025a -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-tip">TIP 2025</span>
-        <img src="files/TIP2025a.png" alt="TIP 2025 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-tip">TIP</span>
+        <img src="files/TIP2025a.png" alt="TIP 2025a">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">Boosting Geometric Invariants for Discriminative Forensics of Large-Scale Generated Visual Content</div>
         <div class="pub-authors"><strong>Shuren Qi</strong>, Chao Wang, Zhiqiu Huang, Yushu Zhang, Xiangyu Chen, Yi Zhang, Tieyong Zeng, Fenglei Fan</div>
         <div class="pub-venue">IEEE Transactions on Image Processing <em>(TIP)</em>, 2025</div>
@@ -750,15 +830,16 @@
           <a class="pub-link" href="files/TIP2025a.pdf" target="_blank">Paper</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- TIP 2025 -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-tip">TIP 2025</span>
-        <img src="files/TIP2025.png" alt="TIP 2025 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-tip">TIP</span>
+        <img src="files/TIP2025.png" alt="TIP 2025">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">Hard EXIF: Protecting Image Authorship Through Metadata, Hardware, and Content</div>
         <div class="pub-authors">Yushu Zhang, Bowen Shi, <strong>Shuren Qi*</strong>, Xiangli Xiao, Ping Wang, Wenying Wen</div>
         <div class="pub-venue">IEEE Transactions on Image Processing <em>(TIP)</em>, 2025</div>
@@ -766,15 +847,16 @@
           <a class="pub-link" href="https://ieeexplore.ieee.org/document/11114780" target="_blank">Paper</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- TCSVT -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-tcsvt">TCSVT 2024</span>
-        <img src="files/TCSVT2024.png" alt="TCSVT 2024 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-tcsvt">TCSVT</span>
+        <img src="files/TCSVT2024.png" alt="TCSVT 2024">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">Spatial-Frequency Discriminability for Revealing Adversarial Perturbations</div>
         <div class="pub-authors">Chao Wang, <strong>Shuren Qi*</strong>, Zhiqiu Huang, Yushu Zhang, Rushi Lan, Xiaochun Cao, Fenglei Fan</div>
         <div class="pub-venue">IEEE Transactions on Circuits and Systems for Video Technology <em>(TCSVT)</em>, 2024</div>
@@ -783,15 +865,16 @@
           <a class="pub-link" href="https://github.com/ChaoWang1016/ASD" target="_blank">Code</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- TNNLS -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-tnnls">TNNLS 2023</span>
-        <img src="files/TNNLS2023.png" alt="TNNLS 2023 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-tnnls">TNNLS</span>
+        <img src="files/TNNLS2023.png" alt="TNNLS 2023">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">PS-Net: A Learning Strategy for Accurately Exposing the Professional Photoshop Inpainting</div>
         <div class="pub-authors">Yushu Zhang, Zhibin Fu, <strong>Shuren Qi*</strong>, Mingfu Xue, Xiaochun Cao, Yong Xiang</div>
         <div class="pub-venue">IEEE Transactions on Neural Networks and Learning Systems <em>(TNNLS)</em>, 2023</div>
@@ -800,15 +883,16 @@
           <a class="pub-link" href="https://mp.weixin.qq.com/s/5x_fji6lBdrUk2ULEAhqLw" target="_blank">TL;DR</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- TOMM 2022 -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-tomm">TOMM 2022</span>
-        <img src="files/TOMM2022.png" alt="TOMM 2022 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-tomm">TOMM</span>
+        <img src="files/TOMM2022.png" alt="TOMM 2022">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">PRNU-based Image Forgery Localization with Deep Multi-Scale Fusion</div>
         <div class="pub-authors">Yushu Zhang, Qing Tan, <strong>Shuren Qi*</strong>, Mingfu Xue</div>
         <div class="pub-venue">ACM Transactions on Multimedia Computing, Communications, and Applications <em>(TOMM)</em>, 2022</div>
@@ -817,15 +901,16 @@
           <a class="pub-link" href="https://mp.weixin.qq.com/s/uyl-KqAPLWN9Td2r6N6Xkw" target="_blank">TL;DR</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
-    <!-- TOMM 2022_1 -->
+    <!-- TOMM 2022-2 -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-tomm">TOMM 2022</span>
-        <img src="files/TOMM2022_1.png" alt="TOMM 2022 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-tomm">TOMM</span>
+        <img src="files/TOMM2022_1.png" alt="TOMM 2022-2">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">Detection of Recolored Image by Texture Features in Chrominance Components</div>
         <div class="pub-authors">Yushu Zhang, Nuo Chen, <strong>Shuren Qi*</strong>, Mingfu Xue, Zhongyun Hua</div>
         <div class="pub-venue">ACM Transactions on Multimedia Computing, Communications, and Applications <em>(TOMM)</em>, 2022</div>
@@ -833,15 +918,16 @@
           <a class="pub-link" href="https://dl.acm.org/doi/10.1145/3571076" target="_blank">Paper</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- TBD -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-tbd">TBD 2022</span>
-        <img src="files/TBD2022.png" alt="TBD 2022 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-tbd">TBD</span>
+        <img src="files/TBD2022.png" alt="TBD 2022">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">Localization of Inpainting Forgery with Feature Enhancement Network</div>
         <div class="pub-authors">Yushu Zhang, Zhibin Fu, <strong>Shuren Qi*</strong>, Mingfu Xue, Zhongyun Hua, Yong Xiang</div>
         <div class="pub-venue">IEEE Transactions on Big Data <em>(TBD)</em>, 2022</div>
@@ -849,15 +935,16 @@
           <a class="pub-link" href="https://ieeexplore.ieee.org/document/9964430" target="_blank">Paper</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- TIFS -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-tifs">TIFS 2023</span>
-        <img src="files/TIFS2023.png" alt="TIFS 2023 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-tifs">TIFS</span>
+        <img src="files/TIFS2023.png" alt="TIFS 2023">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">Shrinking the Semantic Gap: Spatial Pooling of Local Moment Invariants for Copy-Move Forgery Detection</div>
         <div class="pub-authors">Chao Wang, Zhiqiu Huang, <strong>Shuren Qi</strong>, Yaoshen Yu, Guohua Shen, Yushu Zhang</div>
         <div class="pub-venue">IEEE Transactions on Information Forensics and Security <em>(TIFS)</em>, 2023</div>
@@ -868,63 +955,72 @@
           <a class="pub-link" href="https://zhuanlan.zhihu.com/p/605091599" target="_blank">Zhihu</a>
         </div>
       </div>
-    </div><hr class="pub-divider"/>
+    </div>
+    <hr class="divider">
 
     <!-- CSUR 2024 -->
     <div class="pub-card">
-      <div class="pub-thumb-wrap">
-        <span class="venue-badge badge-csur">CSUR 2024</span>
-        <img src="files/CSUR2024.png" alt="CSUR 2024 paper thumbnail" />
+      <div class="pub-thumb">
+        <span class="venue-badge badge-csur">CSUR</span>
+        <img src="files/CSUR2024.png" alt="CSUR 2024">
       </div>
-      <div class="pub-info">
+      <div class="pub-content">
         <div class="pub-title">Security and Privacy on Generative Data in AIGC: A Survey</div>
         <div class="pub-authors">Tao Wang, Yushu Zhang, <strong>Shuren Qi</strong>, Ruoyu Zhao, Zhihua Xia, Jian Weng</div>
         <div class="pub-venue">ACM Computing Surveys <em>(CSUR)</em>, 2024</div>
         <div class="pub-links">
           <a class="pub-link" href="https://arxiv.org/abs/2309.09435" target="_blank">Paper</a>
           <a class="pub-link" href="https://github.com/Zoky-2020/Security_and_Privacy_in_AIGC" target="_blank">Reading List</a>
-          <span class="pub-tag-chip">ESI Highly Cited</span>
         </div>
+        <span class="pub-note">ESI Highly Cited Paper</span>
       </div>
-    </div><hr class="pub-divider"/>
-  </section>
+    </div>
+    <hr class="divider">
+  </div>
 
-</div>
+  <!-- FOOTER -->
+  <footer>
+    <div class="flag-counter">
+      <a href="https://info.flagcounter.com/oSWA">
+        <img src="https://s11.flagcounter.com/mini/oSWA/bg_FFFFFF/txt_000000/border_C2C2C2/flags_0/" alt="Flag Counter" border="0">
+      </a>
+    </div>
+    <p>Shuren Qi &mdash; City University of Hong Kong</p>
+  </footer>
 
-<!-- FOOTER -->
-<footer class="page">
-  <a href="https://info.flagcounter.com/oSWA">
-    <img src="https://s11.flagcounter.com/mini/oSWA/bg_FFFFFF/txt_000000/border_C2C2C2/flags_0/" alt="Flag Counter" />
-  </a>
-</footer>
+</div><!-- .page-wrap -->
 
 <script>
-  /* ── News: show 6 items initially ── */
-  const items = document.querySelectorAll('#newsList li');
-  const btn   = document.getElementById('showMoreBtn');
-  let expanded = false;
-  items.forEach((el, i) => { if (i >= 6) el.style.display = 'none'; });
-  btn.addEventListener('click', () => {
-    expanded = !expanded;
-    items.forEach((el, i) => { if (i >= 6) el.style.display = expanded ? 'flex' : 'none'; });
-    btn.textContent = expanded ? 'Show less' : 'Show all news';
-    triggerVisible();
-  });
-
-  /* ── IntersectionObserver for fade-in ── */
-  function triggerVisible() {
-    const targets = document.querySelectorAll('.pub-card, .news-list li, .fade-up');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 60);
-          io.unobserve(e.target);
-        }
+  // toggle news
+  function toggleNews() {
+    const extra = document.getElementById('news-extra');
+    const btn   = document.getElementById('news-toggle');
+    extra.classList.toggle('open');
+    btn.textContent = extra.classList.contains('open') ? 'Show less' : 'Show more';
+    if (extra.classList.contains('open')) {
+      extra.querySelectorAll('.timeline-item').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), i * 60);
       });
-    }, { threshold: 0.08 });
-    targets.forEach(t => io.observe(t));
+    }
   }
-  triggerVisible();
+
+  // intersection observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up, .pub-card').forEach(el => observer.observe(el));
+
+  // timeline items initially visible
+  document.querySelectorAll('.timeline > .timeline-item').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 200 + i * 80);
+  });
 </script>
+
 </body>
 </html>
