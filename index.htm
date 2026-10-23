@@ -27,6 +27,7 @@
       --text-prim:   #e8edf2;
       --text-sec:    #9ab0c4;
       --text-dim:    #5d7a90;
+      --text-muted:  #8196ab;
       --accent:      #4a9eca;
       --accent-dim:  #2a6a8a;
       --radius:      10px;
@@ -36,12 +37,19 @@
       --font-display: 'Playfair Display', Georgia, serif;
       --font-body:    'Source Serif 4', Georgia, serif;
       --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+      --type-body:    0.95rem;
+      --type-detail:  0.85rem;
+      --type-label:   0.72rem;
+      --page-width:   1040px;
+      --page-gutter:  32px;
+      --section-gap:  56px;
       --nav-h:        64px;
     }
 
     /* ─── RESET & BASE ──────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 12px); }
+    [hidden] { display: none !important; }
 
     body {
       background: var(--bg);
@@ -54,6 +62,12 @@
     }
 
     ::selection { background: var(--gold-dim); color: var(--text-prim); }
+    strong { font-weight: 600; }
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--gold-light);
+      outline-offset: 4px;
+    }
 
     /* ─── NOISE TEXTURE OVERLAY ─────────────────────────────────── */
     body::before {
@@ -84,7 +98,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 40px;
+      padding: 0 max(var(--page-gutter), calc((100% - var(--page-width)) / 2 + var(--page-gutter)));
     }
 
     .nav-brand {
@@ -131,43 +145,47 @@
     .nav-links a:hover::after { transform: scaleX(1); }
 
     /* ─── MAIN WRAPPER ──────────────────────────────────────────── */
-    main {
-      max-width: 1040px;
+    main,
+    .page-container {
+      max-width: var(--page-width);
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0 var(--page-gutter);
       position: relative;
       z-index: 1;
     }
 
     /* ─── HERO SECTION ──────────────────────────────────────────── */
     .hero {
-      padding-top: calc(var(--nav-h) + 72px);
-      padding-bottom: 64px;
+      padding-top: calc(var(--nav-h) + 56px);
+      padding-bottom: 40px;
       display: grid;
-      grid-template-columns: 210px 1fr auto;
-      gap: 48px;
+      grid-template-columns: 320px minmax(0, 1fr);
+      column-gap: 48px;
+      row-gap: 28px;
       align-items: start;
     }
 
-    /* ── Photo: show fully, no crop ── */
+    .hero-visual,
+    .hero-content { min-width: 0; }
+
+    .hero-visual { display: grid; gap: 24px; }
+    .hero-content { display: grid; gap: 24px; }
+
+    /* Portrait and the owner's direct links form one column. */
     .hero-photo {
-  	  position: relative;
-  	  display: inline-block;   
-  	  width: fit-content;       
-  	  align-self: start;        
-	}
+      position: relative;
+      width: 100%;
+      isolation: isolate;
+    }
     .hero-photo img {
-      width: 180px;
-      height: auto;            
-      display: block;          
+      width: 100%;
+      height: auto;
+      display: block;
       border-radius: var(--radius-lg);
       filter: grayscale(15%) contrast(1.05);
       transition: filter 0.4s ease;
     }
-
-    .hero-photo img:hover {
-      filter: grayscale(0%) contrast(1.0);
-    }
+    .hero-photo img:hover { filter: grayscale(0%) contrast(1.0); }
     /* Gold gradient border ring */
     .hero-photo::before {
       content: '';
@@ -186,50 +204,57 @@
       z-index: -1;
     }
 
-    /* Bio */
+    /* Use the same type hierarchy and colors as the rest of the page. */
     .hero-name {
       font-family: var(--font-display);
       font-size: 2.4rem;
       font-weight: 700;
       color: var(--text-prim);
       line-height: 1.15;
-      margin-bottom: 4px;
+      margin-bottom: 20px;
     }
     .hero-name-cn {
+      display: block;
+      margin-top: 4px;
       font-family: var(--font-display);
       font-size: 1.2rem;
       font-weight: 400;
       font-style: italic;
+      line-height: 1.75;
       color: var(--gold);
-      margin-bottom: 20px;
       letter-spacing: 0.15em;
+      white-space: nowrap;
     }
 
     .hero-position {
       font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-prim);
+      line-height: 1.9;
+    }
+    .hero-affiliation {
+      display: grid;
+      font-size: 0.95rem;
       color: var(--text-sec);
       line-height: 1.9;
     }
-    .hero-position strong {
-      color: var(--text-prim);
-      font-weight: 600;
-    }
-    .hero-position .inst {
-      color: var(--accent);
+    .hero-institution {
       font-weight: 400;
+      color: var(--accent);
+      text-decoration: none;
     }
-    .hero-position .group {
+    .hero-institution:hover { color: var(--gold-light); }
+    .hero-group {
       font-size: 0.85rem;
-      color: var(--gold-dim);
       font-style: italic;
+      color: var(--gold-dim);
     }
 
+    .hero-bio { display: grid; gap: 14px; min-width: 0; }
     .hero-bio-text {
-      margin-top: 24px;
-      font-size: 0.92rem;
+      font-size: var(--type-body);
       color: var(--text-sec);
       line-height: 1.85;
-      max-width: 560px;
     }
     .hero-bio-text a {
       color: var(--gold);
@@ -239,61 +264,90 @@
     }
     .hero-bio-text a:hover { color: var(--gold-light); border-color: var(--gold-light); }
 
-    /* Sidebar */
-    .sidebar-section { margin-bottom: 28px; }
-    .sidebar-label {
+    .hero-research {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 160px minmax(0, 1fr);
+      gap: 24px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+    }
+    .hero-research h2 {
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: var(--type-label);
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      line-height: 1.85;
       color: var(--text-dim);
-      margin-bottom: 10px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid var(--border);
     }
-
-    .interest-tags { display: flex; flex-direction: column; gap: 6px; }
-    .interest-tag {
-      font-size: 0.82rem;
-      color: var(--text-sec);
+    .research-interests {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px 24px;
+      list-style: none;
+    }
+    .research-interests li {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       gap: 8px;
+      font-size: var(--type-detail);
+      color: var(--text-sec);
+      line-height: 1.75;
     }
-    .interest-tag::before {
+    .research-interests li::before {
       content: '';
-      width: 4px; height: 4px;
+      width: 4px;
+      height: 4px;
       border-radius: 50%;
       background: var(--gold);
       flex-shrink: 0;
+      align-self: center;
     }
 
-    .contact-list { display: flex; flex-direction: column; gap: 6px; }
-    .contact-list a,
-    .contact-list span {
+    .hero-connections {
+      display: grid;
+      gap: 16px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .contact-list { display: grid; gap: 6px; }
+    .contact-list a {
       font-family: var(--font-mono);
       font-size: 0.75rem;
+      font-weight: 400;
       color: var(--text-sec);
+      line-height: 1.75;
       text-decoration: none;
       transition: color 0.2s;
+      overflow-wrap: anywhere;
     }
-    .contact-list a { color: var(--accent); }
     .contact-list a:hover { color: var(--gold-light); }
 
-    .profile-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
-    .profile-link {
+    .profile-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .profile-link,
+    .pub-link,
+    .news-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: var(--type-label);
+      font-weight: 400;
+      line-height: 1.75;
       padding: 4px 12px;
       border: 1px solid var(--border-light);
       border-radius: 20px;
       color: var(--text-sec);
       text-decoration: none;
-      transition: all 0.2s;
       letter-spacing: 0.05em;
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
     }
-    .profile-link:hover {
+    .profile-link:hover,
+    .pub-link:hover,
+    .news-toggle:hover {
       border-color: var(--gold);
       color: var(--gold-light);
       background: rgba(201,169,110,0.08);
@@ -307,13 +361,14 @@
     }
 
     /* ─── SECTION HEADING ───────────────────────────────────────── */
-    .section { padding: 64px 0 48px; }
+    .section { padding: var(--section-gap) 0 40px; }
 
     .section-header {
       display: flex;
       align-items: baseline;
-      gap: 16px;
-      margin-bottom: 36px;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-bottom: 28px;
     }
     .section-title {
       font-family: var(--font-display);
@@ -323,18 +378,19 @@
     }
     .section-sub {
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: var(--type-label);
       color: var(--text-dim);
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
     .section-header a {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: var(--type-label);
       color: var(--accent);
       text-decoration: none;
       margin-left: auto;
       letter-spacing: 0.05em;
+      text-underline-offset: 4px;
       transition: color 0.2s;
     }
     .section-header a:hover { color: var(--gold-light); }
@@ -343,24 +399,24 @@
     .news-list {
       display: flex;
       flex-direction: column;
-      border-left: 2px solid var(--border);
+      border-left: 1px solid var(--border);
       padding-left: 28px;
       margin-left: 12px;
     }
 
     .news-item {
       position: relative;
-      padding: 12px 0;
+      padding: 10px 0;
       font-size: 0.88rem;
       color: var(--text-sec);
-      line-height: 1.7;
+      line-height: 1.8;
       transition: color 0.2s;
     }
     .news-item::before {
       content: '';
       position: absolute;
-      left: -35px;
-      top: 18px;
+      left: -32.5px;
+      top: 19px;
       width: 8px; height: 8px;
       border-radius: 50%;
       background: var(--bg-3);
@@ -382,12 +438,14 @@
       display: inline-block;
       font-family: var(--font-mono);
       font-size: 0.65rem;
+      font-weight: 500;
+      line-height: 1.5;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--gold);
       background: rgba(201,169,110,0.1);
       border: 1px solid var(--gold-dim);
-      padding: 1px 7px;
+      padding: 2px 7px;
       border-radius: 4px;
       margin-right: 8px;
       vertical-align: middle;
@@ -397,26 +455,16 @@
     .news-item a:hover { color: var(--gold-light); }
 
     .news-toggle {
-      margin-top: 16px;
-      margin-left: 40px;
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      padding: 6px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.2s;
+      margin-top: 20px;
+      margin-left: 41px;
     }
-    .news-toggle:hover { border-color: var(--gold-dim); color: var(--gold); }
 
     /* ─── PUBLICATION CATEGORY ──────────────────────────────────── */
-    .pub-category { margin-bottom: 48px; }
+    .pub-category { margin-bottom: 40px; }
+    .pub-category:last-child { margin-bottom: 0; }
     .pub-category-title {
       font-family: var(--font-mono);
-      font-size: 0.78rem;
+      font-size: var(--type-label);
       font-weight: 500;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -436,19 +484,16 @@
     /* ─── PUBLICATION CARD ──────────────────────────────────────── */
     .pub-card {
       display: grid;
-      grid-template-columns: 200px 1fr;
+      grid-template-columns: 200px minmax(0, 1fr);
       gap: 28px;
       padding: 24px 0;
       border-bottom: 1px solid var(--border);
       border-radius: var(--radius);
-      transition: background 0.2s, padding 0.2s, margin 0.2s;
+      transition: background 0.2s;
     }
     .pub-card:last-child { border-bottom: none; }
     .pub-card:hover {
-      background: rgba(30,45,61,0.4);
-      padding-left: 12px;
-      padding-right: 12px;
-      margin: 0 -12px;
+      background: rgba(30,45,61,0.22);
     }
 
     /* ── Thumbnail: full display, no crop ── */
@@ -457,12 +502,14 @@
       align-self: start;
     }
     .pub-thumb img {
-      /* Full display: show entire image without cropping */
       width: 100%;
       height: auto;
+      aspect-ratio: 10 / 7;
+      object-fit: contain;
+      padding: 6px;
       display: block;
       border-radius: var(--radius);
-      background: var(--surface);
+      background: var(--bg-2);
       border: 1px solid var(--border);
     }
 
@@ -471,13 +518,13 @@
       position: absolute;
       top: 8px; left: 8px;
       font-family: var(--font-mono);
-      font-size: 0.62rem;
+      font-size: 0.65rem;
       font-weight: 500;
-      letter-spacing: 0.08em;
-      padding: 3px 8px;
-      border-radius: 5px;
+      letter-spacing: 0.05em;
+      padding: 2px 7px;
+      border-radius: 4px;
       text-transform: uppercase;
-      line-height: 1.2;
+      line-height: 1.5;
     }
 
     .badge-preprint { background:#252525; color:#a8a8a8; border:1px solid #454545; }
@@ -494,6 +541,7 @@
     .badge-www    { background:#1a3a2a; color:#6acca0; border:1px solid #2a6a50; }
 
     /* Pub content */
+    .pub-content { min-width: 0; }
     .pub-title {
       font-family: var(--font-body);
       font-size: 0.98rem;
@@ -503,21 +551,21 @@
       margin-bottom: 6px;
     }
     .pub-authors {
-      font-size: 0.83rem;
-      color: var(--text-dim);
-      margin-bottom: 5px;
+      font-size: var(--type-detail);
+      color: var(--text-muted);
+      margin-bottom: 6px;
     }
     .pub-authors strong { color: var(--text-sec); }
     .pub-venue {
-      font-size: 0.82rem;
-      color: var(--text-dim);
+      font-size: var(--type-detail);
+      color: var(--text-muted);
       font-style: italic;
       margin-bottom: 10px;
     }
     .pub-venue-name {
       color: var(--accent);
       font-style: normal;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     /* Artifact badges */
@@ -525,72 +573,70 @@
       display: inline-block;
       font-family: var(--font-mono);
       font-size: 0.65rem;
-      padding: 1px 7px;
+      padding: 2px 7px;
       border-radius: 4px;
       margin-right: 4px;
       font-style: normal;
+      font-weight: 500;
+      line-height: 1.5;
+      white-space: nowrap;
     }
     .ab-available  { background:rgba(232,98,52,0.15);  color:#E86234; border:1px solid rgba(232,98,52,0.4); }
-    .ab-functional { background:rgba(51,115,181,0.15); color:#3373B5; border:1px solid rgba(51,115,181,0.4); }
-    .ab-reproduced { background:rgba(103,68,148,0.15); color:#674494; border:1px solid rgba(103,68,148,0.4); }
+    .ab-functional { background:rgba(51,115,181,0.15); color:#7eacdb; border:1px solid rgba(51,115,181,0.4); }
+    .ab-reproduced { background:rgba(103,68,148,0.15); color:#b499d0; border:1px solid rgba(103,68,148,0.4); }
 
     .esi-badge {
       display: inline-block;
       font-family: var(--font-mono);
       font-size: 0.65rem;
-      padding: 1px 7px;
+      padding: 2px 7px;
       border-radius: 4px;
       background: rgba(201,169,110,0.12);
       color: var(--gold);
       border: 1px solid var(--gold-dim);
       margin-left: 4px;
       font-style: normal;
+      font-weight: 500;
+      line-height: 1.5;
+      white-space: nowrap;
     }
 
     .pub-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    .pub-link {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.05em;
-      padding: 3px 10px;
-      border: 1px solid var(--border-light);
-      border-radius: 5px;
-      color: var(--text-dim);
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .pub-link:hover {
-      border-color: var(--gold-dim);
-      color: var(--gold-light);
-      background: rgba(201,169,110,0.06);
+      gap: 8px;
+      margin-top: 12px;
     }
 
     /* ─── FOOTER ────────────────────────────────────────────────── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 32px 0 48px;
-      text-align: center;
+      padding: 32px 0;
       position: relative;
       z-index: 1;
     }
     footer p {
       font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--text-dim);
+      font-size: var(--type-label);
+      color: var(--text-muted);
       letter-spacing: 0.05em;
     }
     footer .flag-counter {
-      margin: 16px auto 0;
+      margin: 0;
       display: inline-block;
+      color: var(--text-muted);
+      text-decoration: none;
       opacity: 0.5;
       transition: opacity 0.2s;
     }
     footer .flag-counter:hover { opacity: 0.9; }
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+    .flag-counter img { display: block; max-width: 100%; height: auto; border: 0; }
 
     /* ─── DECORATIVE BG GRID ────────────────────────────────────── */
     .bg-grid {
@@ -612,28 +658,65 @@
     }
 
     .hero         { animation: fadeUp 0.8s ease both; }
-    .hero-photo   { animation: fadeUp 0.8s 0.1s ease both; }
-    .hero-bio     { animation: fadeUp 0.8s 0.2s ease both; }
-    .hero-sidebar { animation: fadeUp 0.8s 0.3s ease both; }
-    .section      { animation: fadeUp 0.7s ease both; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
 
     /* ─── RESPONSIVE ────────────────────────────────────────────── */
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .hero {
-        grid-template-columns: 1fr;
-        gap: 32px;
+        grid-template-columns: 280px minmax(0, 1fr);
+        grid-template-areas:
+          "photo heading"
+          "photo connections"
+          "bio bio"
+          "research research";
+        gap: 24px 32px;
         padding-top: calc(var(--nav-h) + 40px);
       }
-      .hero-photo img { width: 150px; }
+      .hero-visual,
+      .hero-content { display: contents; }
+      .hero-photo { grid-area: photo; align-self: start; }
+      .hero-heading { grid-area: heading; align-self: end; }
+      .hero-connections { grid-area: connections; padding-top: 16px; }
+      .hero-bio { grid-area: bio; }
+      .hero-research { grid-area: research; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+    }
+    @media (max-width: 900px) {
+      :root { --page-gutter: 20px; }
       nav { padding: 0 20px; }
       .nav-links { gap: 16px; }
-      main { padding: 0 20px; }
-      .pub-card { grid-template-columns: 150px 1fr; gap: 16px; }
+      .pub-card { grid-template-columns: 150px minmax(0, 1fr); gap: 20px; }
+    }
+    @media (max-width: 680px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: "heading" "photo" "bio" "research" "connections";
+        gap: 24px;
+        padding-top: calc(var(--nav-h) + 32px);
+        padding-bottom: 40px;
+      }
+      .hero-heading { text-align: center; }
+      .hero-photo { width: min(280px, 100%); justify-self: center; }
+      .hero-connections { padding-top: 20px; }
+      .research-interests { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 600px) {
-      .nav-links { display: none; }
+      :root { --nav-h: 96px; --section-gap: 40px; }
+      nav { flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; }
+      .nav-brand { font-size: 1.05rem; }
+      .nav-links { gap: 24px; }
+      .nav-links a { display: block; padding: 4px 0; font-size: 0.68rem; }
+      .section { padding-bottom: 32px; }
+      .section-header a { width: 100%; margin-left: 0; }
+      .pub-category { margin-bottom: 32px; }
       .pub-card { grid-template-columns: 1fr; }
       .pub-thumb { display: none; }
+      .footer-content { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+    @media (max-width: 480px) {
+      .research-interests { grid-template-columns: minmax(0, 1fr); }
     }
   </style>
 </head>
@@ -642,7 +725,7 @@
   <div class="bg-grid"></div>
 
   <!-- NAVIGATION -->
-  <nav>
+  <nav aria-label="Main navigation">
     <a class="nav-brand" href="#home">Dr. Shuren Qi <span>@ CityU</span></a>
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
@@ -651,77 +734,72 @@
     </ul>
   </nav>
 
-  <main>
+  <main id="main-content">
 
     <!-- ═══ HERO ════════════════════════════════════════════════════ -->
     <section class="hero" id="home">
 
-      <!-- Photo: full display, no cropping -->
-      <div class="hero-photo">
-        <img src="files/shuren_2025.jpg" alt="Shuren Qi">
-      </div>
-
-      <!-- Bio -->
-      <div class="hero-bio">
-        <div class="hero-name">Shuren Qi</div>
-        <!-- Chinese name written directly as UTF-8 characters -->
-        <div class="hero-name-cn">祁树仁</div>
-
-        <div class="hero-position">
-          <strong>Postdoctoral Fellow</strong><br>
-          <span class="inst">City University of Hong Kong</span><br>
-          <span class="group">Frontier of Artificial Networks (FAN) Group</span><br>
-          Department of Data Science; College of Computing
+      <div class="hero-visual">
+        <div class="hero-photo">
+          <img src="files/shuren_2026.jpg" alt="Shuren Qi" width="1041" height="1300">
         </div>
 
-        <p class="hero-bio-text">
-          I am currently a Postdoctoral Fellow at the Department of Data Science,
-          City University of Hong Kong (<a href="https://www.cityu.edu.hk/" target="_blank">CityU</a>).
-          Prior to this, I was a Postdoctoral Fellow at
-          The Chinese University of Hong Kong (<a href="https://www.cuhk.edu.hk/" target="_blank">CUHK</a>).
-          I obtained my Ph.D. from
-          Nanjing University of Aeronautics and Astronautics (<a href="https://www.nuaa.edu.cn/" target="_blank">NUAA</a>).
-
-		  My research focuses on 
-		  principled and scalable modeling of inductive bias for data representation.
-		  In particular, I study how <a href="https://shurenqi.github.io/wwwtutorial/" target="_blank">
-		  invariance, symmetry, and hierarchy</a> serve as inductive biases for learning in 2020s and beyond, 
-		  and develop frameworks that are theoretically grounded, structurally transparent, and compatible with scaling.
-          My research has been published in top-tier journals and conferences,
-			    such as ACM Computing Surveys, IEEE TPAMI, IEEE TIP, ICCV, and USENIX Security.
-        </p>
-      </div>
-
-      <!-- Sidebar -->
-      <div class="hero-sidebar">
-        <div class="sidebar-section">
-          <div class="sidebar-label">Research Interests</div>
-          <div class="interest-tags">
-            <span class="interest-tag">Invariance & Symmetry</span>
-            <span class="interest-tag">Representation Theory</span>
-            <span class="interest-tag">Geometric Deep Learning</span>
-			<span class="interest-tag">World Models</span>
-			<span class="interest-tag">AI for Science</span>
-            <span class="interest-tag">Trustworthy AI</span>
+        <div class="hero-connections">
+          <div class="contact-list" aria-label="Email addresses">
+            <a href="mailto:shurenqi@cityu.edu.hk">shurenqi@cityu.edu.hk</a>
+            <a href="mailto:shurenqi@nuaa.edu.cn">shurenqi@nuaa.edu.cn</a>
           </div>
-        </div>
-
-        <div class="sidebar-section">
-          <div class="sidebar-label">Contact</div>
-          <div class="contact-list">
-            <span>shurenqi@cityu.edu.hk</span>
-            <span>shurenqi@nuaa.edu.cn</span>
-          </div>
-        </div>
-
-        <div class="sidebar-section">
-          <div class="sidebar-label">Profiles</div>
-          <div class="profile-links">
-            <a class="profile-link" href="https://scholar.google.com/citations?user=U4UPvlkAAAAJ&hl" target="_blank">Google Scholar</a>
-            <a class="profile-link" href="https://github.com/ShurenQi" target="_blank">GitHub</a>
+          <div class="profile-links" aria-label="Academic profiles">
+            <a class="profile-link" href="https://scholar.google.com/citations?user=U4UPvlkAAAAJ&hl" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+            <a class="profile-link" href="https://github.com/ShurenQi" target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
         </div>
       </div>
+
+      <div class="hero-content">
+        <header class="hero-heading">
+          <h1 class="hero-name">Shuren Qi <span class="hero-name-cn" lang="zh-Hans">祁树仁</span></h1>
+          <p class="hero-position">Postdoctoral Fellow</p>
+          <div class="hero-affiliation">
+            <a class="hero-institution" href="https://www.cityu.edu.hk/" target="_blank" rel="noopener noreferrer">City University of Hong Kong</a>
+            <p class="hero-group">Frontier of Artificial Networks (FAN) Group</p>
+            <p>Department of Data Science; College of Computing</p>
+          </div>
+        </header>
+
+        <div class="hero-bio">
+          <p class="hero-bio-text">
+            I am currently a Postdoctoral Fellow at the Department of Data Science,
+            City University of Hong Kong (<a href="https://www.cityu.edu.hk/" target="_blank" rel="noopener noreferrer">CityU</a>).
+            Prior to this, I was a Postdoctoral Fellow at
+            The Chinese University of Hong Kong (<a href="https://www.cuhk.edu.hk/" target="_blank" rel="noopener noreferrer">CUHK</a>).
+            I obtained my Ph.D. from
+            Nanjing University of Aeronautics and Astronautics (<a href="https://www.nuaa.edu.cn/" target="_blank" rel="noopener noreferrer">NUAA</a>).
+          </p>
+          <p class="hero-bio-text">
+            My research focuses on
+            principled and scalable modeling of inductive bias for data representation.
+            In particular, I study how <a href="https://shurenqi.github.io/wwwtutorial/" target="_blank" rel="noopener noreferrer">
+            invariance, symmetry, and hierarchy</a> serve as inductive biases for learning in the 2020s and beyond,
+            and develop frameworks that are theoretically grounded, structurally transparent, and compatible with scaling.
+            My research has been published in top-tier journals and conferences,
+            such as ACM Computing Surveys, IEEE TPAMI, IEEE TIP, ICCV, and USENIX Security.
+          </p>
+        </div>
+
+      </div>
+
+      <section class="hero-research" aria-labelledby="research-heading">
+        <h2 id="research-heading">Research Interests</h2>
+        <ul class="research-interests">
+          <li>Invariance &amp; Symmetry</li>
+          <li>Representation Theory</li>
+          <li>Geometric Deep Learning</li>
+          <li>World Models</li>
+          <li>AI for Science</li>
+          <li>Trustworthy AI</li>
+        </ul>
+      </section>
 
     </section>
 
@@ -737,17 +815,17 @@
       <div class="news-list">
         <div class="news-item pinned">
           <span class="news-pin-badge">Pinned</span>
-          A series of invited talks <a href="https://fancityu.github.io/" target="_blank">Frontier of Artificial Network</a>.
+          A series of invited talks <a href="https://fancityu.github.io/" target="_blank" rel="noopener noreferrer">Frontier of Artificial Network</a>.
         </div>
 		<div class="news-item">
           Paper accepted by <strong>IEEE Transactions on Multimedia (TMM)</strong>.
         </div>
 		<div class="news-item">
             Huawei Workshop: Neural Networks and Model Compression
-            [<a href="files/Huawei Workshop.pdf" target="_blank">poster</a>] [<a href="files/Huawei Workshop Program.pdf" target="_blank">program</a>].
+            [<a href="files/Huawei Workshop.pdf" target="_blank" rel="noopener noreferrer">poster</a>] [<a href="files/Huawei Workshop Program.pdf" target="_blank" rel="noopener noreferrer">program</a>].
         </div>
 		<div class="news-item">
-          Serving as an <strong>Associate Editor</strong> of <a href="https://onlinelibrary.wiley.com/journal/14680394" target="_blank"><strong>Expert Systems</strong></a> (Wiley).
+          Serving as an <strong>Associate Editor</strong> of <a href="https://onlinelibrary.wiley.com/journal/14680394" target="_blank" rel="noopener noreferrer"><strong>Expert Systems</strong></a> (Wiley).
         </div>
         <div class="news-item">
           Paper accepted by <strong>IEEE Transactions on Image Processing (TIP)</strong>.
@@ -757,9 +835,9 @@
         </div>
         
 
-        <div id="news-extra">
+        <div id="news-extra" hidden>
 		<div class="news-item">
-          A talk at the <a href="https://cai.jxufe.edu.cn/shows/14/486.html" target="_blank">Jiangxi University of Finance and Economics</a>.
+          A talk at the <a href="https://cai.jxufe.edu.cn/shows/14/486.html" target="_blank" rel="noopener noreferrer">Jiangxi University of Finance and Economics</a>.
         </div>
         <div class="news-item">
           Paper accepted by <strong>IEEE Transactions on Image Processing (TIP)</strong>.
@@ -771,24 +849,24 @@
           Honored to be supported by the Young Elite Scientists Sponsorship Program (Hong Kong and Macau), Guangzhou Association for Science and Technology.
         </div>
           <div class="news-item">
-            A talk at the <a href="https://www.cityu.edu.hk/rcms/wgm2025/index.html" target="_blank">City University of Hong Kong</a>.
+            A talk at the <a href="https://www.cityu.edu.hk/rcms/wgm2025/index.html" target="_blank" rel="noopener noreferrer">City University of Hong Kong</a>.
           </div>
           <div class="news-item">
             Paper accepted by <strong>IEEE Transactions on Image Processing (TIP)</strong>.
           </div>
           <div class="news-item">
-            Minisymposium <a href="https://www.math.cuhk.edu.hk/conference/hksiam2025/mini-ms02.php" target="_blank">Trustworthy ML: Theory and Applications</a>&rdquo;
-            [<a href="files/MS02 Poster.pdf" target="_blank">poster</a>] [<a href="files/MS02 Program.pdf" target="_blank">program</a>].
+            Minisymposium <a href="https://www.math.cuhk.edu.hk/conference/hksiam2025/mini-ms02.php" target="_blank" rel="noopener noreferrer">Trustworthy ML: Theory and Applications</a>
+            [<a href="files/MS02 Poster.pdf" target="_blank" rel="noopener noreferrer">poster</a>] [<a href="files/MS02 Program.pdf" target="_blank" rel="noopener noreferrer">program</a>].
           </div>
           <div class="news-item">
             Paper accepted by <strong>International Conference on Computer Vision (ICCV) 2025</strong>.
           </div>
           <div class="news-item">
-            A talk at <a href="https://ccs.scu.edu.cn/info/1025/4143.htm" target="_blank">Sichuan University</a>.
+            A talk at <a href="https://ccs.scu.edu.cn/info/1025/4143.htm" target="_blank" rel="noopener noreferrer">Sichuan University</a>.
           </div>
           <div class="news-item">
-            <a href="https://shurenqi.github.io/wwwtutorial/" target="_blank">ACM Web Conference (WWW) 2025 tutorial homepage</a> released
-            [<a href="wwwtutorial/materials/fullslides.pdf" target="_blank">slides</a>].
+            <a href="https://shurenqi.github.io/wwwtutorial/" target="_blank" rel="noopener noreferrer">ACM Web Conference (WWW) 2025 tutorial homepage</a> released
+            [<a href="wwwtutorial/materials/fullslides.pdf" target="_blank" rel="noopener noreferrer">slides</a>].
           </div>
           <div class="news-item">
             Awarded for outstanding doctoral dissertation by the University.
@@ -797,16 +875,16 @@
             Supported by the Research Talent Hub for ITF projects (RTH-ITF).
           </div>
           <div class="news-item">
-            A talk at Huawei Hong Kong Research Center [<a href="files/huaweitalk.pdf" target="_blank">slides</a>].
+            A talk at Huawei Hong Kong Research Center [<a href="files/huaweitalk.pdf" target="_blank" rel="noopener noreferrer">slides</a>].
           </div>
           <div class="news-item">
             Paper accepted by <strong>USENIX Security Symposium (USENIX Security) 2025</strong>.
           </div>
           <div class="news-item">
-            A talk at <a href="https://math.nuaa.edu.cn/2024/1230/c17584a361830/page.htm" target="_blank">Nanjing University of Aeronautics and Astronautics</a>.
+            A talk at <a href="https://math.nuaa.edu.cn/2024/1230/c17584a361830/page.htm" target="_blank" rel="noopener noreferrer">Nanjing University of Aeronautics and Astronautics</a>.
           </div>
           <div class="news-item">
-            A talk at <a href="http://im.hit.edu.cn/2024/1219/c8389a361435/page.htm" target="_blank">Harbin Institute of Technology</a>.
+            A talk at <a href="http://im.hit.edu.cn/2024/1219/c8389a361435/page.htm" target="_blank" rel="noopener noreferrer">Harbin Institute of Technology</a>.
           </div>
           <div class="news-item">
             Tutorial accepted by the ACM Web Conference (WWW) 2025.
@@ -818,20 +896,20 @@
             Joining the Department of Mathematics, The Chinese University of Hong Kong, as a Postdoctoral Fellow.
           </div>
           <div class="news-item">
-            A talk at <a href="https://math.hit.edu.cn/2024/0624/c10292a347610/page.htm" target="_blank">Harbin Institute of Technology</a>
-            [<a href="files/HITslides.pdf" target="_blank">slides</a>].
+            A talk at <a href="https://math.hit.edu.cn/2024/0624/c10292a347610/page.htm" target="_blank" rel="noopener noreferrer">Harbin Institute of Technology</a>
+            [<a href="files/HITslides.pdf" target="_blank" rel="noopener noreferrer">slides</a>].
           </div>
           <div class="news-item">
-            A talk at the <a href="files/CUHKposter.pdf" target="_blank">Chinese University of Hong Kong</a>.
+            A talk at the <a href="files/CUHKposter.pdf" target="_blank" rel="noopener noreferrer">Chinese University of Hong Kong</a>.
           </div>
           <div class="news-item">
-            Passed the <a href="https://cs.nuaa.edu.cn/2024/0530/c10851a341405/page.htm" target="_blank">doctoral dissertation defense</a>
-            [<a href="files/dissertation.pdf" target="_blank">dissertation</a>].
+            Passed the <a href="https://cs.nuaa.edu.cn/2024/0530/c10851a341405/page.htm" target="_blank" rel="noopener noreferrer">doctoral dissertation defense</a>
+            [<a href="files/dissertation.pdf" target="_blank" rel="noopener noreferrer">dissertation</a>].
           </div>
         </div><!-- #news-extra -->
       </div>
 
-      <button class="news-toggle" id="newsToggle" onclick="toggleNews()">Show all updates</button>
+      <button class="news-toggle" id="newsToggle" type="button" aria-expanded="false" aria-controls="news-extra" onclick="toggleNews()">Show all updates</button>
     </section>
 
     <div class="section-divider"></div>
@@ -840,12 +918,12 @@
     <section class="section" id="publications">
       <div class="section-header">
         <h2 class="section-title">Selected Publications</h2>
-        <a href="https://scholar.google.com/citations?user=U4UPvlkAAAAJ&hl" target="_blank">Full list on Google Scholar &rarr;</a>
+        <a href="https://scholar.google.com/citations?user=U4UPvlkAAAAJ&hl" target="_blank" rel="noopener noreferrer">Full list on Google Scholar &rarr;</a>
       </div>
 
       <!-- ── Representations ── -->
       <div class="pub-category">
-        <div class="pub-category-title">Representations</div>
+        <h3 class="pub-category-title">Representations</h3>
 
         <!-- WWW Tutorial -->
         <div class="pub-card">
@@ -854,17 +932,17 @@
             <img src="files/tutorial2024.png" alt="WWW Tutorial 2025">
           </div>
           <div class="pub-content">
-            <div class="pub-title">Rethink Deep Learning with Invariance in Data Representation</div>
+            <h4 class="pub-title">Rethink Deep Learning with Invariance in Data Representation</h4>
             <div class="pub-authors"><strong>Shuren Qi</strong>, Fei Wang, Tieyong Zeng, Fenglei Fan</div>
             <div class="pub-venue">
               <span class="pub-venue-name">ACM Web Conference (WWW)</span>, Tutorial Track, 2025
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="https://shurenqi.github.io/wwwtutorial/" target="_blank">Homepage</a>
-              <a class="pub-link" href="wwwtutorial/materials/fullslides.pdf" target="_blank">Slides</a>
-              <a class="pub-link" href="https://dl.acm.org/doi/10.1145/3701716.3715861" target="_blank">Proposal</a>
-              <a class="pub-link" href="https://www.dropbox.com/scl/fo/yj261r2tefsatajs83ju5/ACIcJmjCZXqhFhvu2pLvu5w?dl=0&e=1&preview=WWW+Tutorial+Video+Teaser+by+ShurenQi.mp4&rlkey=noxe7toqy7konflqq9kbcy05r&st=q9241kft" target="_blank">Teaser</a>
-              <a class="pub-link" href="https://mp.weixin.qq.com/s/ICPpEy9KQupg8o1dROoR3g" target="_blank">TL;DR</a>
+              <a class="pub-link" href="https://shurenqi.github.io/wwwtutorial/" target="_blank" rel="noopener noreferrer">Homepage</a>
+              <a class="pub-link" href="wwwtutorial/materials/fullslides.pdf" target="_blank" rel="noopener noreferrer">Slides</a>
+              <a class="pub-link" href="https://dl.acm.org/doi/10.1145/3701716.3715861" target="_blank" rel="noopener noreferrer">Proposal</a>
+              <a class="pub-link" href="https://www.dropbox.com/scl/fo/yj261r2tefsatajs83ju5/ACIcJmjCZXqhFhvu2pLvu5w?dl=0&e=1&preview=WWW+Tutorial+Video+Teaser+by+ShurenQi.mp4&rlkey=noxe7toqy7konflqq9kbcy05r&st=q9241kft" target="_blank" rel="noopener noreferrer">Teaser</a>
+              <a class="pub-link" href="https://mp.weixin.qq.com/s/ICPpEy9KQupg8o1dROoR3g" target="_blank" rel="noopener noreferrer">TL;DR</a>
             </div>
           </div>
         </div>
@@ -876,14 +954,14 @@
             <img src="files/Preprint2026.png" alt="Preprint 2026">
           </div>
           <div class="pub-content">
-            <div class="pub-title">Geometric Invariance Priors in Vision Transformers: Principles and Costs</div>
+            <h4 class="pub-title">Geometric Invariance Priors in Vision Transformers: Principles and Costs</h4>
             <div class="pub-authors"><strong>Shuren Qi</strong>, Yushu Zhang, Yuming Fang, Xiaochun Cao, Fenglei Fan</div>
             <div class="pub-venue">
               <span class="pub-venue-name">Preprint</span>, 2026
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="files/Preprint2026.pdf" target="_blank">Paper</a>
-              <a class="pub-link" href="https://github.com/ShurenQi/GeoFormer" target="_blank">Code</a>
+              <a class="pub-link" href="files/Preprint2026.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
+              <a class="pub-link" href="https://github.com/ShurenQi/GeoFormer" target="_blank" rel="noopener noreferrer">Code</a>
             </div>
           </div>
         </div>
@@ -895,16 +973,16 @@
             <img src="files/ICCV2025.png" alt="ICCV 2025">
           </div>
           <div class="pub-content">
-            <div class="pub-title">Transparent Vision: A Theory of Hierarchical Invariant Representations</div>
+            <h4 class="pub-title">Transparent Vision: A Theory of Hierarchical Invariant Representations</h4>
             <div class="pub-authors"><strong>Shuren Qi</strong>, Yushu Zhang, Chao Wang, Zhihua Xia, Xiaochun Cao, Fenglei Fan</div>
             <div class="pub-venue">
               <span class="pub-venue-name">International Conference on Computer Vision (ICCV)</span>, 2025
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="files/ICCV2025.pdf" target="_blank">Paper</a>
-              <a class="pub-link" href="https://github.com/ShurenQi/HIR" target="_blank">Code</a>
-              <a class="pub-link" href="files/ICCV2025poster.pdf" target="_blank">Poster</a>
-              <a class="pub-link" href="https://mp.weixin.qq.com/s/Fkmj4BzcwcMe7NxLChaTlQ" target="_blank">TL;DR</a>
+              <a class="pub-link" href="files/ICCV2025.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
+              <a class="pub-link" href="https://github.com/ShurenQi/HIR" target="_blank" rel="noopener noreferrer">Code</a>
+              <a class="pub-link" href="files/ICCV2025poster.pdf" target="_blank" rel="noopener noreferrer">Poster</a>
+              <a class="pub-link" href="https://mp.weixin.qq.com/s/Fkmj4BzcwcMe7NxLChaTlQ" target="_blank" rel="noopener noreferrer">TL;DR</a>
             </div>
           </div>
         </div>
@@ -916,18 +994,18 @@
             <img src="files/TPAMI2023.png" alt="TPAMI 2023">
           </div>
           <div class="pub-content">
-            <div class="pub-title">A Principled Design of Image Representation: Towards Forensic Tasks</div>
+            <h4 class="pub-title">A Principled Design of Image Representation: Towards Forensic Tasks</h4>
             <div class="pub-authors"><strong>Shuren Qi</strong>, Yushu Zhang, Chao Wang, Jiantao Zhou, Xiaochun Cao</div>
             <div class="pub-venue">
               <span class="pub-venue-name">IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)</span>, 2023
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="https://arxiv.org/abs/2203.00913" target="_blank">Paper</a>
-              <a class="pub-link" href="https://github.com/ShurenQi/DIR" target="_blank">Code</a>
-              <a class="pub-link" href="https://mp.weixin.qq.com/s/M6eUEF7Fyutx3ixM5fGyvg" target="_blank">Award</a>
-              <a class="pub-link" href="https://newsweb.nuaa.edu.cn/2022/0907/c738a291713/page.htm" target="_blank">Media</a>
-              <a class="pub-link" href="https://github.com/ChenqiKONG/Awesome-Image-Forensics" target="_blank">Reading List</a>
-              <a class="pub-link" href="https://mp.weixin.qq.com/s/j5mn4PsRaKu7JLmp142p7g" target="_blank">TL;DR</a>
+              <a class="pub-link" href="https://arxiv.org/abs/2203.00913" target="_blank" rel="noopener noreferrer">Paper</a>
+              <a class="pub-link" href="https://github.com/ShurenQi/DIR" target="_blank" rel="noopener noreferrer">Code</a>
+              <a class="pub-link" href="https://mp.weixin.qq.com/s/M6eUEF7Fyutx3ixM5fGyvg" target="_blank" rel="noopener noreferrer">Award</a>
+              <a class="pub-link" href="https://newsweb.nuaa.edu.cn/2022/0907/c738a291713/page.htm" target="_blank" rel="noopener noreferrer">Media</a>
+              <a class="pub-link" href="https://github.com/ChenqiKONG/Awesome-Image-Forensics" target="_blank" rel="noopener noreferrer">Reading List</a>
+              <a class="pub-link" href="https://mp.weixin.qq.com/s/j5mn4PsRaKu7JLmp142p7g" target="_blank" rel="noopener noreferrer">TL;DR</a>
             </div>
           </div>
         </div>
@@ -939,16 +1017,16 @@
             <img src="files/TPAMI2024.png" alt="TPAMI 2024">
           </div>
           <div class="pub-content">
-            <div class="pub-title">Representing Noisy Image Without Denoising</div>
+            <h4 class="pub-title">Representing Noisy Image Without Denoising</h4>
             <div class="pub-authors"><strong>Shuren Qi</strong>, Yushu Zhang, Chao Wang, Tao Xiang, Xiaochun Cao, Yong Xiang</div>
             <div class="pub-venue">
               <span class="pub-venue-name">IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)</span>, 2024
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="https://arxiv.org/abs/2301.07409" target="_blank">Paper</a>
-              <a class="pub-link" href="https://github.com/ShurenQi/FMR" target="_blank">Code</a>
-			  <a class="pub-link" href="files/TPAMI2024.jpg" target="_blank">Award</a>
-              <a class="pub-link" href="https://mp.weixin.qq.com/s/BS1N_vvIhLAD3Sa7Mv8O9g" target="_blank">TL;DR</a>
+              <a class="pub-link" href="https://arxiv.org/abs/2301.07409" target="_blank" rel="noopener noreferrer">Paper</a>
+              <a class="pub-link" href="https://github.com/ShurenQi/FMR" target="_blank" rel="noopener noreferrer">Code</a>
+			  <a class="pub-link" href="files/TPAMI2024.jpg" target="_blank" rel="noopener noreferrer">Award</a>
+              <a class="pub-link" href="https://mp.weixin.qq.com/s/BS1N_vvIhLAD3Sa7Mv8O9g" target="_blank" rel="noopener noreferrer">TL;DR</a>
             </div>
           </div>
         </div>
@@ -960,19 +1038,19 @@
             <img src="files/CSUR2023.png" alt="CSUR 2023">
           </div>
           <div class="pub-content">
-            <div class="pub-title">
+            <h4 class="pub-title">
               A Survey of Orthogonal Moments for Image Representation: Theory, Implementation, and Evaluation
               <span class="esi-badge">ESI Highly Cited</span>
-            </div>
+            </h4>
             <div class="pub-authors"><strong>Shuren Qi</strong>, Yushu Zhang, Chao Wang, Jiantao Zhou, Xiaochun Cao</div>
             <div class="pub-venue">
               <span class="pub-venue-name">ACM Computing Surveys (CSUR)</span>, 2023 &middot; <em>Accepted in 1st round of peer review</em>
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="https://arxiv.org/abs/2103.14799" target="_blank">Paper</a>
-              <a class="pub-link" href="https://github.com/ShurenQi/MomentToolbox" target="_blank">Code</a>
-              <a class="pub-link" href="https://zhuanlan.zhihu.com/p/402410540" target="_blank">Zhihu</a>
-              <a class="pub-link" href="https://mp.weixin.qq.com/s/ymAAzMQbWbKyuWz_r0wDBQ" target="_blank">TL;DR</a>
+              <a class="pub-link" href="https://arxiv.org/abs/2103.14799" target="_blank" rel="noopener noreferrer">Paper</a>
+              <a class="pub-link" href="https://github.com/ShurenQi/MomentToolbox" target="_blank" rel="noopener noreferrer">Code</a>
+              <a class="pub-link" href="https://zhuanlan.zhihu.com/p/402410540" target="_blank" rel="noopener noreferrer">Zhihu</a>
+              <a class="pub-link" href="https://mp.weixin.qq.com/s/ymAAzMQbWbKyuWz_r0wDBQ" target="_blank" rel="noopener noreferrer">TL;DR</a>
             </div>
           </div>
         </div>
@@ -981,7 +1059,7 @@
 
       <!-- ── Applications ── -->
       <div class="pub-category">
-        <div class="pub-category-title">Applications</div>
+        <h3 class="pub-category-title">Applications</h3>
 
         <!-- USENIX Security 2025 -->
         <div class="pub-card">
@@ -990,7 +1068,7 @@
             <img src="files/USENIX2025.png" alt="USENIX Security 2025">
           </div>
           <div class="pub-content">
-            <div class="pub-title">Atkscopes: Multiresolution Adversarial Perturbation as a Unified Attack on Perceptual Hashing and Beyond</div>
+            <h4 class="pub-title">Atkscopes: Multiresolution Adversarial Perturbation as a Unified Attack on Perceptual Hashing and Beyond</h4>
             <div class="pub-authors">Yushu Zhang, Yuanyuan Sun, <strong>Shuren Qi*</strong>, Zhongyun Hua, Wenying Wen, Yuming Fang</div>
             <div class="pub-venue">
               <span class="pub-venue-name">USENIX Security Symposium (USENIX Security)</span>, 2025 &nbsp;
@@ -999,11 +1077,11 @@
               <span class="artifact-badge ab-reproduced">Reproduced</span>
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="https://www.usenix.org/conference/usenixsecurity25/presentation/zhang-yushu" target="_blank">Paper</a>
-              <a class="pub-link" href="https://zenodo.org/records/15114114" target="_blank">Code</a>
-              <a class="pub-link" href="files/USENIX2025artifactappendix.pdf" target="_blank">Artifact Appendix</a>
-              <a class="pub-link" href="files/USENIX2025slides.pdf" target="_blank">Slides</a>
-              <a class="pub-link" href="https://mp.weixin.qq.com/s/0hf-5WR4YbGFSrV3Gr9PjQ" target="_blank">TL;DR</a>
+              <a class="pub-link" href="https://www.usenix.org/conference/usenixsecurity25/presentation/zhang-yushu" target="_blank" rel="noopener noreferrer">Paper</a>
+              <a class="pub-link" href="https://zenodo.org/records/15114114" target="_blank" rel="noopener noreferrer">Code</a>
+              <a class="pub-link" href="files/USENIX2025artifactappendix.pdf" target="_blank" rel="noopener noreferrer">Artifact Appendix</a>
+              <a class="pub-link" href="files/USENIX2025slides.pdf" target="_blank" rel="noopener noreferrer">Slides</a>
+              <a class="pub-link" href="https://mp.weixin.qq.com/s/0hf-5WR4YbGFSrV3Gr9PjQ" target="_blank" rel="noopener noreferrer">TL;DR</a>
             </div>
           </div>
         </div>
@@ -1015,13 +1093,13 @@
             <img src="files/TMM2026.png" alt="TMM 2026">
           </div>
           <div class="pub-content">
-            <div class="pub-title">Robust Yet Imperceptible Diffusion Watermarking for AI-Generated Image Verification</div>
+            <h4 class="pub-title">Robust Yet Imperceptible Diffusion Watermarking for AI-Generated Image Verification</h4>
             <div class="pub-authors"><strong>Shuren Qi</strong>, Wenying Wen, Mengxin Shen, Yushu Zhang, Fenglei Fan</div>
             <div class="pub-venue">
               <span class="pub-venue-name">IEEE Transactions on Multimedia (TMM)</span>, 2026
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="files/TMM2026.pdf" target="_blank">Paper</a>
+              <a class="pub-link" href="files/TMM2026.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
 			  
             </div>
           </div>
@@ -1034,13 +1112,13 @@
             <img src="files/TIP2025a.png" alt="TIP 2025">
           </div>
           <div class="pub-content">
-            <div class="pub-title">Boosting Geometric Invariants for Discriminative Forensics of Large-Scale Generated Visual Content</div>
+            <h4 class="pub-title">Boosting Geometric Invariants for Discriminative Forensics of Large-Scale Generated Visual Content</h4>
             <div class="pub-authors"><strong>Shuren Qi</strong>, Chao Wang, Zhiqiu Huang, Yushu Zhang, Xiangyu Chen, Yi Zhang, Tieyong Zeng, Fenglei Fan</div>
             <div class="pub-venue">
               <span class="pub-venue-name">IEEE Transactions on Image Processing (TIP)</span>, 2025
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="files/TIP2025a.pdf" target="_blank">Paper</a>
+              <a class="pub-link" href="files/TIP2025a.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
             </div>
           </div>
         </div>
@@ -1054,14 +1132,14 @@
             <img src="files/TIP2026.png" alt="TIP 2026">
           </div>
           <div class="pub-content">
-            <div class="pub-title">Revealing Photoshop Inpainting Traces Under JPEG Compressions</div>
+            <h4 class="pub-title">Revealing Photoshop Inpainting Traces Under JPEG Compressions</h4>
             <div class="pub-authors">Yushu Zhang, Lu Zhang, <strong>Shuren Qi*</strong>, Xiangli Xiao, Wenying Wen</div>
             <div class="pub-venue">
               <span class="pub-venue-name">IEEE Transactions on Image Processing (TIP)</span>, 2026
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="files/TIP2026.pdf" target="_blank">Paper</a>
-			  <a class="pub-link" href="https://mp.weixin.qq.com/s/Hox4KaBpF_Oqew9R0Lyjcg" target="_blank">TL;DR</a>
+              <a class="pub-link" href="files/TIP2026.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
+			  <a class="pub-link" href="https://mp.weixin.qq.com/s/Hox4KaBpF_Oqew9R0Lyjcg" target="_blank" rel="noopener noreferrer">TL;DR</a>
             </div>
           </div>
         </div>
@@ -1073,13 +1151,13 @@
             <img src="files/TIP2025.png" alt="TIP 2025">
           </div>
           <div class="pub-content">
-            <div class="pub-title">Hard EXIF: Protecting Image Authorship Through Metadata, Hardware, and Content</div>
+            <h4 class="pub-title">Hard EXIF: Protecting Image Authorship Through Metadata, Hardware, and Content</h4>
             <div class="pub-authors">Yushu Zhang, Bowen Shi, <strong>Shuren Qi*</strong>, Xiangli Xiao, Ping Wang, Wenying Wen</div>
             <div class="pub-venue">
               <span class="pub-venue-name">IEEE Transactions on Image Processing (TIP)</span>, 2025
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="https://ieeexplore.ieee.org/document/11114780" target="_blank">Paper</a>
+              <a class="pub-link" href="https://ieeexplore.ieee.org/document/11114780" target="_blank" rel="noopener noreferrer">Paper</a>
             </div>
           </div>
         </div>
@@ -1150,17 +1228,17 @@
             <img src="files/CSUR2024.png" alt="CSUR 2024">
           </div>
           <div class="pub-content">
-            <div class="pub-title">
+            <h4 class="pub-title">
               Security and Privacy on Generative Data in AIGC: A Survey
               <span class="esi-badge">ESI Highly Cited</span>
-            </div>
+            </h4>
             <div class="pub-authors">Tao Wang, Yushu Zhang, <strong>Shuren Qi</strong>, Ruoyu Zhao, Zhihua Xia, Jian Weng</div>
             <div class="pub-venue">
               <span class="pub-venue-name">ACM Computing Surveys (CSUR)</span>, 2024
             </div>
             <div class="pub-links">
-              <a class="pub-link" href="https://arxiv.org/abs/2309.09435" target="_blank">Paper</a>
-              <a class="pub-link" href="https://github.com/Zoky-2020/Security_and_Privacy_in_AIGC" target="_blank">Reading List</a>
+              <a class="pub-link" href="https://arxiv.org/abs/2309.09435" target="_blank" rel="noopener noreferrer">Paper</a>
+              <a class="pub-link" href="https://github.com/Zoky-2020/Security_and_Privacy_in_AIGC" target="_blank" rel="noopener noreferrer">Reading List</a>
             </div>
           </div>
         </div>
@@ -1172,41 +1250,31 @@
 
   <!-- FOOTER -->
   <footer>
-    <main>
+    <div class="page-container footer-content">
       <p>Shuren Qi &middot; City University of Hong Kong &middot; 2026</p>
       <a class="flag-counter" href="https://info.flagcounter.com/oSWA">
-        <img src="https://s11.flagcounter.com/mini/oSWA/bg_FFFFFF/txt_000000/border_C2C2C2/flags_0/" alt="Flag Counter" border="0">
+        <img src="https://s11.flagcounter.com/mini/oSWA/bg_FFFFFF/txt_000000/border_C2C2C2/flags_0/" alt="Flag Counter">
       </a>
-    </main>
+    </div>
   </footer>
 
   <script>
     // ── News toggle ──────────────────────────────────────────────
-    var newsVisible = false;
     var newsExtra   = document.getElementById('news-extra');
     var newsToggle  = document.getElementById('newsToggle');
 
-    newsExtra.style.display = 'none';
-
     function toggleNews() {
-      newsVisible = !newsVisible;
-      newsExtra.style.display  = newsVisible ? 'block' : 'none';
-      newsToggle.textContent   = newsVisible ? 'Show fewer updates' : 'Show all updates';
+      var expanded = newsToggle.getAttribute('aria-expanded') === 'true';
+      newsExtra.hidden = expanded;
+      newsToggle.setAttribute('aria-expanded', String(!expanded));
+      newsToggle.textContent = expanded ? 'Show all updates' : 'Show fewer updates';
     }
 
-    // ── Intersection Observer fade-in ────────────────────────────
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-        }
-      });
-    }, { threshold: 0.08 });
-
-    document.querySelectorAll('.section').forEach(function(el) {
-      el.style.animationPlayState = 'paused';
-      observer.observe(el);
-    });
+    // Keep the footer intact if the external visitor counter is unavailable.
+    var flagCounter = document.querySelector('.flag-counter');
+    var flagImage = flagCounter.querySelector('img');
+    flagImage.addEventListener('error', function() { flagCounter.hidden = true; });
+    if (flagImage.complete && flagImage.naturalWidth === 0) flagCounter.hidden = true;
   </script>
 </body>
 </html>
